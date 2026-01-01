@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MULEX HERO - Brand Book Completo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, .brand-font { font-family: 'Oswald', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nav-link {
+            position: relative;
+            font-weight: 500;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #FF4500;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-left-color: #00FFFF;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .banner-frame {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 2rem;
+            text-align: center;
+        }
+        .banner-anim { animation: cycleFrames 9s infinite; }
+        
+        @keyframes cycleFrames {
+            0%, 30% { opacity: 1; transform: translateY(0); }
+            33%, 100% { opacity: 0; transform: translateY(-10px); }
+        }
+        .frame-1 { animation-delay: 0s; }
+        .frame-2 { animation-delay: 3s; }
+        .frame-3 { animation-delay: 6s; }
+
+        .magazine-spread {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transform: perspective(1000px) rotateX(2deg);
+        }
+        .magazine-fold {
+            background: linear-gradient(to right, 
+                rgba(0,0,0,0.1) 0%, 
+                rgba(0,0,0,0.3) 45%, 
+                rgba(255,255,255,0.1) 50%, 
+                rgba(0,0,0,0.3) 55%, 
+                rgba(0,0,0,0.1) 100%);
+        }
+
+        .scene-3d { perspective: 1000px; }
+        .box-3d {
+            width: 200px;
+            height: 300px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateY(-30deg) rotateX(10deg);
+            transition: transform 0.5s;
+        }
+        .box-3d:hover { transform: rotateY(0deg) rotateX(0deg) scale(1.05); }
+        .face { position: absolute; backface-visibility: hidden; }
+        .front {
+            width: 200px; height: 300px;
+            background: #111;
+            border: 1px solid #333;
+            transform: translateZ(50px);
+            display: flex; flex-direction: column; justify-content: space-between; padding: 20px;
+        }
+        .side {
+            width: 100px; height: 300px;
+            background: #0a0a0a;
+            transform: rotateY(90deg) translateZ(50px);
+            border: 1px solid #222;
+        }
+        .top {
+            width: 200px; height: 100px;
+            background: #FF4500;
+            transform: rotateX(90deg) translateZ(50px);
+        }
+        
+        .sachet {
+            background: linear-gradient(135deg, #ccc, #fff, #999);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid #999;
+        }
+    </style>
+</head>
+<body class="bg-neutral-900 text-white selection:bg-orange-500 selection:text-white">
+
+    <nav class="fixed w-full z-50 bg-neutral-900/95 backdrop-blur border-b border-white/10 shadow-lg">
+        <div class="max-w-[1400px] mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2 min-w-fit">
+                <i data-lucide="hexagon" class="text-orange-500 w-8 h-8"></i>
+                <span class="text-2xl font-bold tracking-widest brand-font hidden md:block">MULEX HERO</span>
+            </div>
+            
+            <div class="hidden xl:flex items-center gap-6 text-neutral-400">
+                <a href="#estrategia" class="nav-link hover:text-white">ESTRATEGIA</a>
+                <a href="#campanas" class="nav-link hover:text-white">CAMPAÑAS</a>
+                <a href="#packaging" class="nav-link hover:text-white">PACKAGING</a>
+                <a href="#digital" class="nav-link hover:text-white">WEB</a>
+                <div class="h-4 w-px bg-white/20"></div>
+                <a href="#logotipo" class="nav-link hover:text-white">LOGO</a>
+                <a href="#colores" class="nav-link hover:text-white">COLOR</a>
+                <div class="h-4 w-px bg-white/20"></div>
+                <a href="#ai-lab" class="text-cyan-400 hover:text-cyan-300 transition flex items-center gap-1 text-xs font-bold tracking-widest border border-cyan-400/50 px-3 py-1.5 rounded hover:bg-cyan-400/10"><i data-lucide="cpu" class="w-3 h-3"></i> CONSULTOR TÉCNICO</a>
+            </div>
+
+            <div class="xl:hidden text-white">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-30"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/80 to-transparent"></div>
+        
+        <div class="relative z-10 text-center px-4">
+            <div class="inline-block border border-orange-500/50 bg-orange-500/10 px-4 py-1 rounded-full text-orange-400 text-sm tracking-widest mb-6">MANUAL DE MARCA V9.5</div>
+            <h1 class="text-7xl md:text-9xl font-bold tracking-tighter mb-4 uppercase">Juguemos a<br><span class="text-orange-500">Lo Bestia.</span></h1>
+            <p class="text-xl md:text-2xl text-neutral-300 max-w-2xl mx-auto font-light">Ingeniería extrema para situaciones que requieren sensibilidad invisible.</p>
+        </div>
+    </header>
+
+    <section id="estrategia" class="py-24 px-6 max-w-7xl mx-auto border-b border-white/10">
+        <div class="flex items-center gap-4 mb-12">
+            <span class="w-12 h-1 bg-orange-500"></span>
+            <h2 class="text-4xl font-bold uppercase">Estrategia de Marca</h2>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-16">
+            <div>
+                <h3 class="text-2xl font-bold mb-6 text-orange-500">1. NAMING & JUSTIFICACIÓN</h3>
+                <div class="space-y-4">
+                    <div class="p-4 border border-white/10 rounded-lg opacity-50">
+                        <span class="text-xs font-bold text-neutral-500">OPCIÓN 1 (DESCARTADA)</span>
+                        <p class="font-mono text-lg">MULEX TITAN-SKIN</p>
+                    </div>
+                    <div class="p-4 border border-white/10 rounded-lg opacity-50">
+                        <span class="text-xs font-bold text-neutral-500">OPCIÓN 2 (DESCARTADA)</span>
+                        <p class="font-mono text-lg">MULEX J-FLEX</p>
+                    </div>
+                    
+                    <div class="p-6 bg-orange-600 rounded-lg relative overflow-hidden mt-6">
+                        <div class="absolute right-0 top-0 p-2 opacity-20"><i data-lucide="check-circle" class="w-12 h-12"></i></div>
+                        <span class="text-xs font-bold text-orange-200">OPCIÓN ELEGIDA</span>
+                        <p class="text-3xl font-bold brand-font mt-1">MULEX HERO</p>
+                        <p class="mt-4 text-sm text-white/90 leading-relaxed">
+                            <strong>Justificación:</strong> Un héroe es un solucionador de problemas. Al evitar la palabra "condón", posicionamos a "Hero" como una herramienta versátil y poderosa. Eleva la categoría de producto a "gadget de seguridad".
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-6 text-orange-500">2. COMUNICACIÓN & TONO</h3>
+                
+                <div class="glass-panel p-8 rounded-2xl mb-8">
+                    <span class="text-sm text-neutral-400 tracking-widest uppercase block mb-2">CONCEPTO CREATIVO</span>
+                    <p class="text-4xl font-bold italic">"JUGUEMOS A LO BESTIA."</p>
+                    <p class="mt-4 text-neutral-300">Sustituimos la narrativa de "sexo seguro" por una de "ingeniería extrema". Si aguanta remolcar un coche, aguantará cualquier "juego" físico intenso.</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 bg-neutral-800 rounded-lg">
+                        <i data-lucide="zap" class="text-cyan-400 mb-2"></i>
+                        <strong class="block text-white">Tono Técnico-Absurdo</strong>
+                        <span class="text-xs text-neutral-400">Tratamos el producto como hardware militar o gadget de alta tecnología.</span>
+                    </div>
+                    <div class="p-4 bg-neutral-800 rounded-lg">
+                        <i data-lucide="eye-off" class="text-cyan-400 mb-2"></i>
+                        <strong class="block text-white">Cero Explícito</strong>
+                        <span class="text-xs text-neutral-400">No vendemos anticonceptivos, vendemos dispositivos de seguridad extrema.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
