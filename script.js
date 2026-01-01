@@ -13,8 +13,12 @@ if (hamburger) {
 const navLinks = document.querySelectorAll('.nav-menu a');
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+        if (hamburger) {
+            hamburger.classList.remove('active');
+        }
+        if (navMenu) {
+            navMenu.classList.remove('active');
+        }
     });
 });
 
@@ -57,19 +61,16 @@ if (contactForm) {
 }
 
 // Add scroll effect to navbar
-let lastScroll = 0;
 const navbar = document.querySelector('.navbar');
 
 window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
+    const currentScroll = window.scrollY;
     
     if (currentScroll > 100) {
         navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
     } else {
         navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
     }
-    
-    lastScroll = currentScroll;
 });
 
 // Intersection Observer for fade-in animations
