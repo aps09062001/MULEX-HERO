@@ -4,1206 +4,813 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MULEX HERO - Brand Book</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'magma': '#FF4500',
+                        'carbon': '#1A1A1A',
+                        'hyper-cyan': '#00FFFF',
+                        'lab-white': '#F5F5F5',
+                    },
+                    fontFamily: {
+                        'oswald': ['Oswald', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @media print {
+            body { margin: 0; padding: 0; }
+            .no-print { display: none !important; }
+            section { page-break-inside: avoid; }
+            .page-break { page-break-after: always; }
+            nav { display: none; }
         }
-
-        :root {
-            --primary-color: #FF6B35;
-            --secondary-color: #004E89;
-            --accent-color: #F7B801;
-            --dark-color: #1A1A2E;
-            --light-color: #F5F5F5;
-            --gradient-1: linear-gradient(135deg, #FF6B35 0%, #F7B801 100%);
-            --gradient-2: linear-gradient(135deg, #004E89 0%, #1A1A2E 100%);
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--dark-color);
-            background-color: var(--light-color);
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--dark-color);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--primary-color);
-        }
-
-        .pdf-button {
-            background: var(--gradient-1);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.3s;
-        }
-
-        .pdf-button:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            background: var(--gradient-2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            text-align: center;
-            color: white;
-            z-index: 2;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .hero h1 {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            opacity: 0.9;
-        }
-
-        .hero-bg-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-
-        .floating-element {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-element:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-element:nth-child(2) {
+        
+        .packaging-box {
             width: 200px;
-            height: 200px;
-            top: 60%;
-            right: 15%;
-            animation-delay: 2s;
-        }
-
-        .floating-element:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            bottom: 10%;
-            left: 50%;
-            animation-delay: 4s;
-        }
-
-        /* Section Styles */
-        section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 3rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Estrategia Section */
-        .estrategia-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .estrategia-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .estrategia-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .estrategia-card h3 {
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        /* Campañas Section */
-        .campanas-container {
-            display: grid;
-            gap: 3rem;
-        }
-
-        .campana-item {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .campana-header {
-            background: var(--gradient-1);
-            color: white;
-            padding: 1.5rem;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .campana-content {
-            padding: 2rem;
-        }
-
-        .press-design {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-top: 1rem;
-        }
-
-        .press-mockup {
-            background: var(--light-color);
-            padding: 2rem;
-            border-radius: 10px;
-            min-height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed var(--primary-color);
-        }
-
-        .tv-spot-frame {
-            background: black;
-            aspect-ratio: 16/9;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            margin-top: 1rem;
-        }
-
-        .storyboard-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .storyboard-frame {
-            aspect-ratio: 16/9;
-            background: var(--light-color);
-            border: 2px solid var(--secondary-color);
-            border-radius: 5px;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .storyboard-frame .frame-number {
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .display-banner {
-            background: var(--gradient-2);
-            color: white;
-            padding: 3rem;
-            border-radius: 10px;
-            text-align: center;
-            margin-top: 1rem;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .display-banner h3 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Packaging 3D Section */
-        .packaging-3d {
-            perspective: 1000px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 500px;
-        }
-
-        .box-3d {
-            width: 300px;
-            height: 400px;
+            height: 250px;
             position: relative;
             transform-style: preserve-3d;
             animation: rotate3d 10s infinite linear;
         }
-
+        
+        @keyframes rotate3d {
+            0% { transform: rotateX(-10deg) rotateY(0deg); }
+            100% { transform: rotateX(-10deg) rotateY(360deg); }
+        }
+        
         .box-face {
             position: absolute;
-            width: 300px;
-            height: 400px;
-            background: white;
-            border: 2px solid var(--primary-color);
+            width: 200px;
+            height: 250px;
+            border: 2px solid #FF4500;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
         }
-
-        .box-face.front {
-            transform: translateZ(150px);
-            background: var(--gradient-1);
-            color: white;
+        
+        .face-front { transform: translateZ(100px); }
+        .face-back { transform: rotateY(180deg) translateZ(100px); }
+        .face-left { transform: rotateY(-90deg) translateZ(100px); }
+        .face-right { transform: rotateY(90deg) translateZ(100px); }
+        .face-top { transform: rotateX(90deg) translateZ(125px); width: 200px; height: 200px; }
+        .face-bottom { transform: rotateX(-90deg) translateZ(125px); width: 200px; height: 200px; }
+        
+        .banner-animation {
+            animation: slideIn 2s ease-in-out infinite;
         }
-
-        .box-face.back {
-            transform: translateZ(-150px) rotateY(180deg);
+        
+        @keyframes slideIn {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
         }
-
-        .box-face.right {
-            width: 300px;
-            transform: rotateY(90deg) translateZ(150px);
-        }
-
-        .box-face.left {
-            width: 300px;
-            transform: rotateY(-90deg) translateZ(150px);
-        }
-
-        .box-face.top {
-            height: 300px;
-            transform: rotateX(90deg) translateZ(200px);
-        }
-
-        .box-face.bottom {
-            height: 300px;
-            transform: rotateX(-90deg) translateZ(200px);
-        }
-
-        /* Digital Web Mockup */
-        .web-mockup {
-            background: var(--light-color);
-            border-radius: 15px;
-            padding: 1rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .browser-chrome {
-            background: white;
-            border-radius: 10px 10px 0 0;
-            padding: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .browser-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .browser-dot.red {
-            background: #FF5F56;
-        }
-
-        .browser-dot.yellow {
-            background: #FFBD2E;
-        }
-
-        .browser-dot.green {
-            background: #27C93F;
-        }
-
-        .browser-content {
-            background: white;
-            min-height: 500px;
-            padding: 2rem;
-            background: var(--gradient-1);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        /* Logo Section */
-        .logo-showcase {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-
-        .logo-variant {
-            background: white;
-            padding: 3rem;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 300px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .logo-variant.dark {
-            background: var(--dark-color);
-            color: white;
-        }
-
-        .logo-text {
-            font-size: 4rem;
-            font-weight: bold;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo-variant.dark .logo-text {
-            -webkit-text-fill-color: white;
-        }
-
-        /* Color Palette */
-        .color-palette {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .color-swatch {
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .color-display {
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .color-info {
-            background: white;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .color-name {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Typography System */
-        .typography-showcase {
-            background: white;
-            padding: 3rem;
-            border-radius: 15px;
-        }
-
-        .font-sample {
-            margin-bottom: 3rem;
-        }
-
-        .font-sample h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--secondary-color);
-        }
-
-        .font-sample h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        .font-sample h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .font-sample p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        /* Photography Direction */
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-
-        .photo-item {
-            aspect-ratio: 1;
-            background: var(--light-color);
-            border-radius: 10px;
-            overflow: hidden;
+        
+        .storyboard-frame {
             position: relative;
-            border: 3px solid var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: var(--secondary-color);
+            aspect-ratio: 16/9;
+            background: #000;
+            border: 3px solid #FF4500;
         }
-
-        .photo-item:hover {
-            transform: scale(1.05);
-            transition: transform 0.3s;
-        }
-
-        /* AI Lab Section */
-        .ai-lab {
-            background: var(--gradient-2);
-            color: white;
-            padding: 3rem;
-            border-radius: 15px;
-        }
-
-        .ai-interface {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 2rem;
-            margin-top: 2rem;
-        }
-
-        .ai-chat {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 1.5rem;
-            min-height: 300px;
-            margin-bottom: 1rem;
-            overflow-y: auto;
-        }
-
-        .ai-message {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .ai-message.user {
-            background: var(--primary-color);
-            margin-left: 20%;
-        }
-
-        .ai-message.assistant {
-            background: var(--secondary-color);
-            margin-right: 20%;
-        }
-
-        .ai-input-area {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .ai-input {
-            flex: 1;
-            padding: 1rem;
-            border-radius: 25px;
-            border: none;
-            font-size: 1rem;
-        }
-
-        .ai-send-button {
-            background: var(--primary-color);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-
-        .ai-send-button:hover {
-            background: var(--accent-color);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark-color);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
+        
+        .magazine-spread {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary-color);
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(5deg);
-            }
-        }
-
-        @keyframes rotate3d {
-            0% {
-                transform: rotateX(-10deg) rotateY(0deg);
-            }
-            100% {
-                transform: rotateX(-10deg) rotateY(360deg);
-            }
-        }
-
-        /* Print Styles */
-        @media print {
-            nav {
-                position: static;
-            }
-
-            .pdf-button {
-                display: none;
-            }
-
-            section {
-                page-break-inside: avoid;
-                padding: 2rem 1rem;
-            }
-
-            .hero {
-                height: auto;
-                padding: 3rem 1rem;
-            }
-
-            .box-3d {
-                animation: none;
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            nav ul {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .hero h1 {
-                font-size: 3rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .press-design,
-            .logo-showcase,
-            .storyboard-grid,
-            .photo-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .box-3d {
-                width: 200px;
-                height: 300px;
-            }
-
-            .box-face {
-                width: 200px;
-                height: 300px;
-            }
+            background: white;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
     </style>
 </head>
-<body>
+<body class="font-inter bg-carbon text-lab-white">
     <!-- Navigation -->
-    <nav>
-        <div class="logo">MULEX HERO</div>
-        <ul>
-            <li><a href="#hero">Inicio</a></li>
-            <li><a href="#estrategia">Estrategia</a></li>
-            <li><a href="#campanas">Campañas</a></li>
-            <li><a href="#packaging">Packaging</a></li>
-            <li><a href="#digital">Digital</a></li>
-            <li><a href="#logo">Logo</a></li>
-            <li><a href="#colores">Colores</a></li>
-            <li><a href="#tipografia">Tipografía</a></li>
-            <li><a href="#fotografia">Fotografía</a></li>
-            <li><a href="#ai-lab">AI Lab</a></li>
-            <li><button class="pdf-button" onclick="window.print()">Exportar PDF</button></li>
-        </ul>
+    <nav class="fixed top-0 w-full bg-carbon/95 backdrop-blur-sm z-50 border-b border-magma/30 no-print">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-oswald text-2xl font-bold">
+                <span class="text-magma">MULEX</span> <span class="text-hyper-cyan">HERO</span>
+            </div>
+            <div class="flex gap-6 items-center">
+                <a href="#hero" class="hover:text-magma transition">Inicio</a>
+                <a href="#estrategia" class="hover:text-magma transition">Estrategia</a>
+                <a href="#campanas" class="hover:text-magma transition">Campañas</a>
+                <a href="#identidad" class="hover:text-magma transition">Identidad</a>
+                <a href="#ai-lab" class="hover:text-magma transition">AI Lab</a>
+                <button onclick="window.print()" class="bg-magma hover:bg-magma/80 px-4 py-2 rounded-lg flex items-center gap-2 transition">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    Export PDF
+                </button>
+            </div>
+        </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="hero" class="hero">
-        <div class="hero-bg-elements">
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-        </div>
-        <div class="hero-content">
-            <h1>MULEX HERO</h1>
-            <p>Brand Book & Identity Guidelines</p>
-        </div>
-    </section>
-
-    <!-- Estrategia Section -->
-    <section id="estrategia">
-        <h2 class="section-title">Estrategia de Marca</h2>
-        <div class="estrategia-grid">
-            <div class="estrategia-card">
-                <h3>Visión</h3>
-                <p>Convertirnos en la marca líder en innovación y calidad, reconocida por transformar experiencias cotidianas en momentos extraordinarios.</p>
-            </div>
-            <div class="estrategia-card">
-                <h3>Misión</h3>
-                <p>Ofrecer productos excepcionales que combinan tecnología avanzada, diseño superior y compromiso con la sostenibilidad.</p>
-            </div>
-            <div class="estrategia-card">
-                <h3>Valores</h3>
-                <p>Innovación constante, excelencia en calidad, responsabilidad social, y dedicación a la satisfacción del cliente.</p>
-            </div>
-            <div class="estrategia-card">
-                <h3>Público Objetivo</h3>
-                <p>Profesionales modernos de 25-45 años que valoran la calidad, el diseño innovador y el impacto positivo.</p>
+    <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <div class="absolute inset-0 bg-gradient-to-br from-carbon via-magma/20 to-hyper-cyan/10"></div>
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,69,0,0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h1 class="font-oswald text-8xl font-bold mb-6">
+                <span class="text-magma">MULEX</span> <span class="text-hyper-cyan">HERO</span>
+            </h1>
+            <p class="text-4xl font-oswald text-lab-white/90 mb-4">Juguemos a Lo Bestia</p>
+            <p class="text-xl text-lab-white/70 max-w-2xl mx-auto">
+                Brand Book 2026 - Sistema de identidad visual completo
+            </p>
+            <div class="mt-12 flex gap-4 justify-center">
+                <div class="bg-magma/20 border border-magma px-6 py-3 rounded-lg">
+                    <i data-lucide="zap" class="w-6 h-6 text-magma inline-block mb-1"></i>
+                    <span class="block text-sm">Gaming Excellence</span>
+                </div>
+                <div class="bg-hyper-cyan/20 border border-hyper-cyan px-6 py-3 rounded-lg">
+                    <i data-lucide="trophy" class="w-6 h-6 text-hyper-cyan inline-block mb-1"></i>
+                    <span class="block text-sm">Performance Hero</span>
+                </div>
+                <div class="bg-lab-white/20 border border-lab-white px-6 py-3 rounded-lg">
+                    <i data-lucide="cpu" class="w-6 h-6 text-lab-white inline-block mb-1"></i>
+                    <span class="block text-sm">AI Powered</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Campañas Section -->
-    <section id="campanas">
-        <h2 class="section-title">Campañas Publicitarias</h2>
-        <div class="campanas-container">
-            <!-- Press Design -->
-            <div class="campana-item">
-                <div class="campana-header">Diseño de Prensa</div>
-                <div class="campana-content">
-                    <div class="press-design">
-                        <div class="press-mockup">
-                            <div style="text-align: center;">
-                                <h3 style="color: var(--primary-color); font-size: 2.5rem; margin-bottom: 1rem;">MULEX HERO</h3>
-                                <p style="font-size: 1.2rem; color: var(--secondary-color);">La nueva era de la innovación</p>
-                                <p style="margin-top: 2rem; font-size: 0.9rem;">Anuncio Página Completa</p>
+    <!-- Estrategia de Marca -->
+    <section id="estrategia" class="min-h-screen py-20 bg-gradient-to-b from-carbon to-carbon/95 page-break">
+        <div class="container mx-auto px-6">
+            <h2 class="font-oswald text-6xl font-bold text-magma mb-12">Estrategia de Marca</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 mb-16">
+                <div class="bg-carbon/50 border border-magma/30 rounded-lg p-8">
+                    <h3 class="font-oswald text-3xl font-bold text-hyper-cyan mb-6">Naming: MULEX HERO</h3>
+                    <div class="space-y-4 text-lab-white/80">
+                        <p><strong class="text-magma">MULEX:</strong> Fusión de "Multiplex" y "Lex" (ley/excelencia). Representa la multiplicación de capacidades y el establecimiento de nuevos estándares en hardware gaming.</p>
+                        <p><strong class="text-hyper-cyan">HERO:</strong> El héroe del rendimiento. No solo un componente, sino el protagonista que transforma la experiencia de juego.</p>
+                        <p class="pt-4 border-t border-magma/30"><strong>Juntos:</strong> MULEX HERO simboliza el componente heroico que multiplica tu potencial gaming, estableciendo un nuevo estándar de excelencia.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-carbon/50 border border-hyper-cyan/30 rounded-lg p-8">
+                    <h3 class="font-oswald text-3xl font-bold text-magma mb-6">Tono de Comunicación</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="flame" class="w-6 h-6 text-magma flex-shrink-0 mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-magma">Audaz & Energético</h4>
+                                <p class="text-lab-white/80">Comunicación directa que desafía los límites y celebra el rendimiento extremo.</p>
                             </div>
                         </div>
-                        <div class="press-mockup">
-                            <div style="text-align: center;">
-                                <h4 style="color: var(--secondary-color); font-size: 1.8rem; margin-bottom: 1rem;">MULEX HERO</h4>
-                                <p style="font-size: 1rem;">Experimenta el futuro hoy</p>
-                                <p style="margin-top: 2rem; font-size: 0.9rem;">Anuncio Media Página</p>
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="target" class="w-6 h-6 text-hyper-cyan flex-shrink-0 mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-hyper-cyan">Técnico & Preciso</h4>
+                                <p class="text-lab-white/80">Respaldado por especificaciones reales y datos de rendimiento verificables.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="users" class="w-6 h-6 text-lab-white flex-shrink-0 mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-lab-white">Aspiracional & Inclusivo</h4>
+                                <p class="text-lab-white/80">Para gamers que buscan lo mejor, sin elitismo innecesario.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- TV Spot -->
-            <div class="campana-item">
-                <div class="campana-header">Spot Televisivo</div>
-                <div class="campana-content">
-                    <h3 style="margin-bottom: 1rem;">Concepto: "Héroes Cotidianos"</h3>
-                    <p>Un spot de 30 segundos que muestra cómo MULEX HERO transforma momentos ordinarios en extraordinarios.</p>
-                    <div class="tv-spot-frame">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">▶</div>
-                            <p>MULEX HERO - "Héroes Cotidianos"</p>
-                            <p style="font-size: 0.9rem; opacity: 0.7;">Duración: 30 segundos</p>
+            <div class="bg-gradient-to-r from-magma/10 to-hyper-cyan/10 border border-magma rounded-lg p-8">
+                <h3 class="font-oswald text-3xl font-bold mb-4">Tagline: "Juguemos a Lo Bestia"</h3>
+                <p class="text-xl text-lab-white/90 mb-4">Un llamado a la acción que combina diversión y rendimiento extremo.</p>
+                <div class="grid md:grid-cols-3 gap-6 mt-6">
+                    <div>
+                        <span class="text-magma font-bold">Juguemos</span>
+                        <p class="text-sm text-lab-white/70">Invitación a la experiencia gaming</p>
+                    </div>
+                    <div>
+                        <span class="text-hyper-cyan font-bold">a Lo</span>
+                        <p class="text-sm text-lab-white/70">Conector coloquial, cercano</p>
+                    </div>
+                    <div>
+                        <span class="text-lab-white font-bold">Bestia</span>
+                        <p class="text-sm text-lab-white/70">Rendimiento animal, sin límites</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campañas -->
+    <section id="campanas" class="min-h-screen py-20 bg-carbon page-break">
+        <div class="container mx-auto px-6">
+            <h2 class="font-oswald text-6xl font-bold text-magma mb-12">Campañas</h2>
+
+            <!-- Press Design - Magazine Spread -->
+            <div class="mb-20">
+                <h3 class="font-oswald text-4xl font-bold text-hyper-cyan mb-8">Diseño Prensa - Magazine Spread</h3>
+                <div class="magazine-spread rounded-lg">
+                    <!-- Left Page -->
+                    <div class="bg-carbon text-lab-white p-8 flex flex-col justify-between">
+                        <div>
+                            <p class="text-magma text-sm font-bold mb-2">MULEX HERO</p>
+                            <h1 class="font-oswald text-6xl font-bold leading-tight mb-6">
+                                JUGUEMOS<br/>
+                                A LO<br/>
+                                <span class="text-magma">BESTIA</span>
+                            </h1>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-magma rounded-lg flex items-center justify-center">
+                                    <i data-lucide="cpu" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold">Performance Extremo</p>
+                                    <p class="text-sm text-lab-white/70">Hasta 240% más rápido</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-hyper-cyan rounded-lg flex items-center justify-center">
+                                    <i data-lucide="zap" class="w-6 h-6 text-carbon"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold">Eficiencia Energética</p>
+                                    <p class="text-sm text-lab-white/70">Máximo rendimiento, mínimo consumo</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Page -->
+                    <div class="bg-gradient-to-br from-magma to-magma/70 p-8 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 opacity-20">
+                            <div class="absolute top-10 right-10 w-64 h-64 border-4 border-hyper-cyan rounded-full"></div>
+                            <div class="absolute bottom-10 left-10 w-48 h-48 border-4 border-lab-white rounded-lg rotate-45"></div>
+                        </div>
+                        <div class="relative text-center">
+                            <div class="text-9xl font-oswald font-bold text-carbon mb-4">HERO</div>
+                            <p class="text-xl text-carbon/80">El componente que multiplica tu potencial</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Storyboard -->
-            <div class="campana-item">
-                <div class="campana-header">Storyboard</div>
-                <div class="campana-content">
-                    <div class="storyboard-grid">
-                        <div class="storyboard-frame">
-                            <div class="frame-number">Escena 1</div>
-                            <p style="text-align: center; font-size: 0.9rem;">Amanecer en la ciudad. Plano aéreo.</p>
+            <!-- TV Spot Storyboard -->
+            <div class="mb-20">
+                <h3 class="font-oswald text-4xl font-bold text-hyper-cyan mb-8">TV Spot - Storyboard</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Scene 1 -->
+                    <div class="bg-carbon/50 border border-magma/30 rounded-lg p-6">
+                        <div class="storyboard-frame mb-4 flex items-center justify-center">
+                            <div class="text-center">
+                                <i data-lucide="gamepad-2" class="w-20 h-20 text-lab-white/30 mx-auto mb-4"></i>
+                                <p class="text-lab-white/50">Gamer frustrado por lag</p>
+                            </div>
                         </div>
-                        <div class="storyboard-frame">
-                            <div class="frame-number">Escena 2</div>
-                            <p style="text-align: center; font-size: 0.9rem;">Persona despertando. Close-up del producto.</p>
+                        <p class="font-bold text-magma mb-2">Escena 1: El Problema (0-3s)</p>
+                        <p class="text-sm text-lab-white/80">Jugador experimentando lag y bajo rendimiento. Frustración visible.</p>
+                    </div>
+
+                    <!-- Scene 2 -->
+                    <div class="bg-carbon/50 border border-magma/30 rounded-lg p-6">
+                        <div class="storyboard-frame mb-4 flex items-center justify-center">
+                            <div class="text-center">
+                                <i data-lucide="cpu" class="w-20 h-20 text-magma mx-auto mb-4"></i>
+                                <p class="text-lab-white/50">MULEX HERO aparece</p>
+                            </div>
                         </div>
-                        <div class="storyboard-frame">
-                            <div class="frame-number">Escena 3</div>
-                            <p style="text-align: center; font-size: 0.9rem;">Uso del producto en acción.</p>
+                        <p class="font-bold text-hyper-cyan mb-2">Escena 2: La Solución (3-6s)</p>
+                        <p class="text-sm text-lab-white/80">Instalación de MULEX HERO. Efecto visual de transformación con partículas cyan.</p>
+                    </div>
+
+                    <!-- Scene 3 -->
+                    <div class="bg-carbon/50 border border-magma/30 rounded-lg p-6">
+                        <div class="storyboard-frame mb-4 flex items-center justify-center">
+                            <div class="text-center">
+                                <i data-lucide="zap" class="w-20 h-20 text-hyper-cyan mx-auto mb-4"></i>
+                                <p class="text-lab-white/50">Performance explosivo</p>
+                            </div>
                         </div>
-                        <div class="storyboard-frame">
-                            <div class="frame-number">Escena 4</div>
-                            <p style="text-align: center; font-size: 0.9rem;">Transformación del entorno.</p>
+                        <p class="font-bold text-magma mb-2">Escena 3: La Transformación (6-9s)</p>
+                        <p class="text-sm text-lab-white/80">Gameplay ultra fluido. Efectos visuales mostrando FPS elevado y velocidad.</p>
+                    </div>
+
+                    <!-- Scene 4 -->
+                    <div class="bg-carbon/50 border border-magma/30 rounded-lg p-6">
+                        <div class="storyboard-frame mb-4 flex items-center justify-center">
+                            <div class="text-center p-6">
+                                <p class="font-oswald text-3xl font-bold text-magma mb-2">JUGUEMOS A LO BESTIA</p>
+                                <p class="text-lab-white font-oswald text-xl">MULEX HERO</p>
+                            </div>
                         </div>
-                        <div class="storyboard-frame">
-                            <div class="frame-number">Escena 5</div>
-                            <p style="text-align: center; font-size: 0.9rem;">Montaje rápido de momentos heroicos.</p>
-                        </div>
-                        <div class="storyboard-frame">
-                            <div class="frame-number">Escena 6</div>
-                            <p style="text-align: center; font-size: 0.9rem;">Logo final con tagline.</p>
-                        </div>
+                        <p class="font-bold text-hyper-cyan mb-2">Escena 4: Call to Action (9-12s)</p>
+                        <p class="text-sm text-lab-white/80">Logo MULEX HERO y tagline. URL del sitio web.</p>
                     </div>
                 </div>
             </div>
 
             <!-- Display Banner -->
-            <div class="campana-item">
-                <div class="campana-header">Banner Display Digital</div>
-                <div class="campana-content">
-                    <div class="display-banner">
-                        <h3>MULEX HERO</h3>
-                        <p style="font-size: 1.2rem; margin-bottom: 1rem;">Tu aliado en cada momento</p>
-                        <button class="pdf-button">Descubre Más</button>
+            <div class="mb-20">
+                <h3 class="font-oswald text-4xl font-bold text-hyper-cyan mb-8">Display Banner (728x90)</h3>
+                <div class="bg-gradient-to-r from-carbon via-magma/20 to-hyper-cyan/20 h-24 rounded-lg flex items-center justify-between px-8 border-2 border-magma banner-animation">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 bg-magma rounded-lg flex items-center justify-center">
+                            <i data-lucide="cpu" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <p class="font-oswald text-2xl font-bold">MULEX HERO</p>
+                            <p class="text-sm text-hyper-cyan">Juguemos a Lo Bestia</p>
+                        </div>
                     </div>
-                    <p style="margin-top: 1rem; text-align: center; color: #666;">Formato: 728x90, 300x250, 160x600</p>
+                    <div class="text-right">
+                        <p class="text-3xl font-oswald font-bold text-magma">+240%</p>
+                        <p class="text-xs text-lab-white/70">Performance</p>
+                    </div>
+                    <button class="bg-hyper-cyan text-carbon px-6 py-2 rounded-lg font-bold hover:bg-hyper-cyan/80 transition">
+                        DESCUBRE MÁS
+                    </button>
+                </div>
+            </div>
+
+            <!-- Packaging 3D -->
+            <div>
+                <h3 class="font-oswald text-4xl font-bold text-hyper-cyan mb-8">Packaging 3D - Interactive Box</h3>
+                <div class="flex justify-center items-center h-96 perspective-1000">
+                    <div class="packaging-box">
+                        <div class="box-face face-front">
+                            <div class="text-center">
+                                <p class="font-oswald text-3xl font-bold text-magma">MULEX</p>
+                                <p class="font-oswald text-2xl text-hyper-cyan">HERO</p>
+                                <i data-lucide="cpu" class="w-12 h-12 text-lab-white mt-4"></i>
+                            </div>
+                        </div>
+                        <div class="box-face face-back">
+                            <div class="text-center text-sm p-4">
+                                <p class="text-magma font-bold mb-2">Especificaciones</p>
+                                <p class="text-xs">Performance Extremo</p>
+                            </div>
+                        </div>
+                        <div class="box-face face-left">
+                            <i data-lucide="zap" class="w-16 h-16 text-hyper-cyan"></i>
+                        </div>
+                        <div class="box-face face-right">
+                            <i data-lucide="trophy" class="w-16 h-16 text-magma"></i>
+                        </div>
+                        <div class="box-face face-top">
+                            <p class="font-oswald text-magma">HERO</p>
+                        </div>
+                        <div class="box-face face-bottom">
+                            <p class="text-xs text-hyper-cyan">MULEX</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Packaging 3D Section -->
-    <section id="packaging">
-        <h2 class="section-title">Packaging 3D</h2>
-        <div class="packaging-3d">
-            <div class="box-3d">
-                <div class="box-face front">MULEX<br>HERO</div>
-                <div class="box-face back">Premium<br>Quality</div>
-                <div class="box-face right">Innovation</div>
-                <div class="box-face left">Design</div>
-                <div class="box-face top">Top</div>
-                <div class="box-face bottom">Bottom</div>
-            </div>
-        </div>
-        <p style="text-align: center; margin-top: 2rem; color: #666;">
-            Packaging premium con acabados especiales y diseño sostenible
-        </p>
     </section>
 
     <!-- Digital Web Mockup -->
-    <section id="digital">
-        <h2 class="section-title">Presencia Digital</h2>
-        <div class="web-mockup">
-            <div class="browser-chrome">
-                <span class="browser-dot red"></span>
-                <span class="browser-dot yellow"></span>
-                <span class="browser-dot green"></span>
-                <span style="margin-left: 1rem; color: #999;">mulexhero.com</span>
-            </div>
-            <div class="browser-content">
-                <div style="text-align: center;">
-                    <h2 style="font-size: 3rem; margin-bottom: 1rem;">MULEX HERO</h2>
-                    <p style="font-size: 1.3rem;">Bienvenido al futuro</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Logo Section -->
-    <section id="logo">
-        <h2 class="section-title">Sistema de Logo</h2>
-        <div class="logo-showcase">
-            <div class="logo-variant">
-                <div class="logo-text">MULEX<br>HERO</div>
-                <p style="margin-top: 1rem; color: #666;">Logo Principal - Fondo Claro</p>
-            </div>
-            <div class="logo-variant dark">
-                <div class="logo-text">MULEX<br>HERO</div>
-                <p style="margin-top: 1rem;">Logo Principal - Fondo Oscuro</p>
-            </div>
-            <div class="logo-variant">
-                <div style="font-size: 3rem; font-weight: bold; color: var(--secondary-color);">MULEX HERO</div>
-                <p style="margin-top: 1rem; color: #666;">Logo Horizontal</p>
-            </div>
-            <div class="logo-variant">
-                <div style="font-size: 5rem; font-weight: bold; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">MH</div>
-                <p style="margin-top: 1rem; color: #666;">Monograma</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Color Palette -->
-    <section id="colores">
-        <h2 class="section-title">Paleta de Colores</h2>
-        <div class="color-palette">
-            <div class="color-swatch">
-                <div class="color-display" style="background: #FF6B35;">
-                    Primary
-                </div>
-                <div class="color-info">
-                    <div class="color-name">Naranja Vibrante</div>
-                    <div class="color-code">#FF6B35</div>
-                    <div>RGB: 255, 107, 53</div>
-                </div>
-            </div>
-            <div class="color-swatch">
-                <div class="color-display" style="background: #004E89;">
-                    Secondary
-                </div>
-                <div class="color-info">
-                    <div class="color-name">Azul Profundo</div>
-                    <div class="color-code">#004E89</div>
-                    <div>RGB: 0, 78, 137</div>
-                </div>
-            </div>
-            <div class="color-swatch">
-                <div class="color-display" style="background: #F7B801;">
-                    Accent
-                </div>
-                <div class="color-info">
-                    <div class="color-name">Amarillo Dorado</div>
-                    <div class="color-code">#F7B801</div>
-                    <div>RGB: 247, 184, 1</div>
-                </div>
-            </div>
-            <div class="color-swatch">
-                <div class="color-display" style="background: #1A1A2E;">
-                    Dark
-                </div>
-                <div class="color-info">
-                    <div class="color-name">Negro Azulado</div>
-                    <div class="color-code">#1A1A2E</div>
-                    <div>RGB: 26, 26, 46</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Typography System -->
-    <section id="tipografia">
-        <h2 class="section-title">Sistema Tipográfico</h2>
-        <div class="typography-showcase">
-            <div class="font-sample">
-                <h1>Heading 1 - Segoe UI</h1>
-                <p>Tamaño: 3rem (48px) | Peso: Bold | Uso: Títulos principales</p>
-            </div>
-            <div class="font-sample">
-                <h2>Heading 2 - Segoe UI</h2>
-                <p>Tamaño: 2.5rem (40px) | Peso: Bold | Uso: Subtítulos de sección</p>
-            </div>
-            <div class="font-sample">
-                <h3>Heading 3 - Segoe UI</h3>
-                <p>Tamaño: 2rem (32px) | Peso: Bold | Uso: Títulos de tarjetas</p>
-            </div>
-            <div class="font-sample">
-                <p>Párrafo - Segoe UI Regular</p>
-                <p>Tamaño: 1.1rem (17.6px) | Peso: Regular | Interlineado: 1.8 | Uso: Cuerpo de texto principal. Este es un ejemplo de cómo se vería un párrafo completo con múltiples líneas de texto para demostrar el espaciado y la legibilidad del sistema tipográfico de MULEX HERO.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Photography Direction -->
-    <section id="fotografia">
-        <h2 class="section-title">Dirección Fotográfica</h2>
-        <p style="text-align: center; margin-bottom: 2rem; font-size: 1.2rem;">
-            Estilo visual: Moderno, dinámico y aspiracional
-        </p>
-        <div class="photo-grid">
-            <div class="photo-item">
-                <div style="text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">📸</div>
-                    <div>Lifestyle</div>
-                </div>
-            </div>
-            <div class="photo-item">
-                <div style="text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🏙️</div>
-                    <div>Urbano</div>
-                </div>
-            </div>
-            <div class="photo-item">
-                <div style="text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">✨</div>
-                    <div>Producto</div>
-                </div>
-            </div>
-            <div class="photo-item">
-                <div style="text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">👥</div>
-                    <div>Personas</div>
-                </div>
-            </div>
-            <div class="photo-item">
-                <div style="text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🌅</div>
-                    <div>Atmosférico</div>
-                </div>
-            </div>
-            <div class="photo-item">
-                <div style="text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎨</div>
-                    <div>Detalle</div>
-                </div>
-            </div>
-        </div>
-        <div style="margin-top: 2rem; background: white; padding: 2rem; border-radius: 15px;">
-            <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">Directrices:</h3>
-            <ul style="list-style-position: inside; line-height: 2;">
-                <li>Iluminación natural y cálida</li>
-                <li>Composiciones dinámicas con líneas diagonales</li>
-                <li>Paleta de colores coherente con la marca</li>
-                <li>Enfoque en momentos auténticos y emocionales</li>
-                <li>Integración sutil del producto en contextos reales</li>
-                <li>Alta calidad y resolución profesional</li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- AI Lab Section -->
-    <section id="ai-lab">
-        <div class="ai-lab">
-            <h2 style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">AI Lab - Consultor Gemini</h2>
-            <p style="text-align: center; font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem;">
-                Asistente inteligente para guías de marca y consultas creativas
-            </p>
-            <div class="ai-interface">
-                <div class="ai-chat" id="aiChat">
-                    <div class="ai-message assistant">
-                        <strong>Gemini AI:</strong><br>
-                        ¡Hola! Soy tu consultor de marca MULEX HERO. Puedo ayudarte con:
-                        <ul style="margin-top: 0.5rem; margin-left: 1rem;">
-                            <li>Aplicaciones de la identidad de marca</li>
-                            <li>Combinaciones de colores apropiadas</li>
-                            <li>Uso correcto del logo</li>
-                            <li>Directrices de comunicación</li>
-                            <li>Ideas creativas para campañas</li>
-                        </ul>
-                        ¿En qué puedo ayudarte hoy?
+    <section class="min-h-screen py-20 bg-gradient-to-b from-carbon to-carbon/95 page-break">
+        <div class="container mx-auto px-6">
+            <h2 class="font-oswald text-6xl font-bold text-magma mb-12">Digital - Web Mockup</h2>
+            <div class="bg-lab-white rounded-lg overflow-hidden shadow-2xl">
+                <!-- Browser Chrome -->
+                <div class="bg-gray-200 px-4 py-3 flex items-center gap-2 border-b border-gray-300">
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <div class="flex-1 bg-white rounded px-3 py-1 text-sm text-gray-600 ml-4">
+                        www.mulexhero.com
                     </div>
                 </div>
-                <div class="ai-input-area">
-                    <input type="text" class="ai-input" id="aiInput" placeholder="Escribe tu pregunta sobre la marca MULEX HERO...">
-                    <button class="ai-send-button" onclick="sendMessage()">Enviar</button>
+                
+                <!-- Website Content -->
+                <div class="bg-carbon text-lab-white">
+                    <!-- Nav -->
+                    <div class="border-b border-magma/30 px-8 py-4 flex justify-between items-center">
+                        <div class="font-oswald text-xl font-bold">
+                            <span class="text-magma">MULEX</span> <span class="text-hyper-cyan">HERO</span>
+                        </div>
+                        <div class="flex gap-6 text-sm">
+                            <a href="#" class="hover:text-magma">Productos</a>
+                            <a href="#" class="hover:text-magma">Tecnología</a>
+                            <a href="#" class="hover:text-magma">Soporte</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Hero -->
+                    <div class="px-8 py-16 bg-gradient-to-r from-magma/20 to-hyper-cyan/20">
+                        <h1 class="font-oswald text-5xl font-bold mb-4">
+                            Juguemos a Lo <span class="text-magma">Bestia</span>
+                        </h1>
+                        <p class="text-xl text-lab-white/80 mb-8">
+                            El hardware gaming que multiplica tu potencial
+                        </p>
+                        <div class="flex gap-4">
+                            <button class="bg-magma px-6 py-3 rounded-lg font-bold">Ver Productos</button>
+                            <button class="border border-hyper-cyan text-hyper-cyan px-6 py-3 rounded-lg font-bold">Especificaciones</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Features -->
+                    <div class="grid grid-cols-3 gap-6 px-8 py-12">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-magma/20 border border-magma rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="cpu" class="w-8 h-8 text-magma"></i>
+                            </div>
+                            <h3 class="font-bold mb-2">Performance</h3>
+                            <p class="text-sm text-lab-white/70">Hasta 240% más rápido</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-hyper-cyan/20 border border-hyper-cyan rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="zap" class="w-8 h-8 text-hyper-cyan"></i>
+                            </div>
+                            <h3 class="font-bold mb-2">Eficiencia</h3>
+                            <p class="text-sm text-lab-white/70">Bajo consumo energético</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-lab-white/20 border border-lab-white rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="trophy" class="w-8 h-8 text-lab-white"></i>
+                            </div>
+                            <h3 class="font-bold mb-2">Confiabilidad</h3>
+                            <p class="text-sm text-lab-white/70">Calidad garantizada</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Identidad Visual -->
+    <section id="identidad" class="min-h-screen py-20 bg-carbon page-break">
+        <div class="container mx-auto px-6">
+            <h2 class="font-oswald text-6xl font-bold text-magma mb-12">Identidad Visual</h2>
+
+            <!-- Logo -->
+            <div class="mb-20">
+                <h3 class="font-oswald text-4xl font-bold text-hyper-cyan mb-8">Logo</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-carbon/50 border border-magma/30 rounded-lg p-12 text-center">
+                        <p class="text-sm text-lab-white/50 mb-8">Versión Principal</p>
+                        <div class="font-oswald text-6xl font-bold">
+                            <span class="text-magma">MULEX</span> <span class="text-hyper-cyan">HERO</span>
+                        </div>
+                        <p class="text-sm text-lab-white/70 mt-8">Fondo Oscuro</p>
+                    </div>
+                    <div class="bg-lab-white border border-gray-300 rounded-lg p-12 text-center">
+                        <p class="text-sm text-gray-500 mb-8">Versión Alternativa</p>
+                        <div class="font-oswald text-6xl font-bold">
+                            <span class="text-magma">MULEX</span> <span class="text-carbon">HERO</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-8">Fondo Claro</p>
+                    </div>
+                </div>
+                <div class="mt-8 bg-carbon/50 border border-magma/30 rounded-lg p-8">
+                    <h4 class="font-bold text-lg mb-4">Especificaciones del Logo</h4>
+                    <div class="grid md:grid-cols-3 gap-6 text-sm">
+                        <div>
+                            <p class="text-magma font-bold mb-2">Espaciado</p>
+                            <p class="text-lab-white/80">Mínimo 20px de espacio libre alrededor del logo</p>
+                        </div>
+                        <div>
+                            <p class="text-hyper-cyan font-bold mb-2">Tamaño Mínimo</p>
+                            <p class="text-lab-white/80">100px de ancho para versión horizontal</p>
+                        </div>
+                        <div>
+                            <p class="text-lab-white font-bold mb-2">Usos Prohibidos</p>
+                            <p class="text-lab-white/80">No distorsionar, rotar o aplicar efectos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Palette -->
+            <div class="mb-20">
+                <h3 class="font-oswald text-4xl font-bold text-hyper-cyan mb-8">Paleta de Color</h3>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div>
+                        <div class="h-48 bg-magma rounded-lg mb-4 flex items-center justify-center">
+                            <i data-lucide="flame" class="w-16 h-16 text-white"></i>
+                        </div>
+                        <p class="font-bold text-magma text-lg">MAGMA ORANGE</p>
+                        <p class="text-sm text-lab-white/70">#FF4500</p>
+                        <p class="text-sm text-lab-white/70">RGB: 255, 69, 0</p>
+                        <p class="text-xs text-lab-white/50 mt-2">Color primario - Energía y pasión</p>
+                    </div>
+                    <div>
+                        <div class="h-48 bg-carbon rounded-lg mb-4 border-2 border-lab-white/20 flex items-center justify-center">
+                            <i data-lucide="shield" class="w-16 h-16 text-white"></i>
+                        </div>
+                        <p class="font-bold text-lab-white text-lg">CARBON BLACK</p>
+                        <p class="text-sm text-lab-white/70">#1A1A1A</p>
+                        <p class="text-sm text-lab-white/70">RGB: 26, 26, 26</p>
+                        <p class="text-xs text-lab-white/50 mt-2">Base - Sofisticación y profundidad</p>
+                    </div>
+                    <div>
+                        <div class="h-48 bg-hyper-cyan rounded-lg mb-4 flex items-center justify-center">
+                            <i data-lucide="zap" class="w-16 h-16 text-carbon"></i>
+                        </div>
+                        <p class="font-bold text-hyper-cyan text-lg">HYPER CYAN</p>
+                        <p class="text-sm text-lab-white/70">#00FFFF</p>
+                        <p class="text-sm text-lab-white/70">RGB: 0, 255, 255</p>
+                        <p class="text-xs text-lab-white/50 mt-2">Acento - Tecnología y futuro</p>
+                    </div>
+                    <div>
+                        <div class="h-48 bg-lab-white rounded-lg mb-4 flex items-center justify-center">
+                            <i data-lucide="sparkles" class="w-16 h-16 text-carbon"></i>
+                        </div>
+                        <p class="font-bold text-lab-white text-lg">LAB WHITE</p>
+                        <p class="text-sm text-lab-white/70">#F5F5F5</p>
+                        <p class="text-sm text-lab-white/70">RGB: 245, 245, 245</p>
+                        <p class="text-xs text-lab-white/50 mt-2">Neutro - Claridad y limpieza</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typography -->
+            <div class="mb-20">
+                <h3 class="font-oswald text-4xl font-bold text-hyper-cyan mb-8">Sistema Tipográfico</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-carbon/50 border border-magma/30 rounded-lg p-8">
+                        <p class="text-magma font-bold mb-4">TIPOGRAFÍA PRINCIPAL</p>
+                        <p class="font-oswald text-6xl font-bold mb-4">Oswald</p>
+                        <p class="text-lab-white/80 mb-6">Títulos, encabezados y elementos destacados</p>
+                        <div class="space-y-2 text-sm">
+                            <p class="font-oswald font-bold">Bold 700 - Títulos principales</p>
+                            <p class="font-oswald font-semibold">SemiBold 600 - Subtítulos</p>
+                            <p class="font-oswald">Regular 400 - Títulos secundarios</p>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-magma/30">
+                            <p class="font-oswald text-4xl">ABCDEFGHIJKLM</p>
+                            <p class="font-oswald text-4xl">NOPQRSTUVWXYZ</p>
+                            <p class="font-oswald text-4xl">0123456789</p>
+                        </div>
+                    </div>
+                    <div class="bg-carbon/50 border border-hyper-cyan/30 rounded-lg p-8">
+                        <p class="text-hyper-cyan font-bold mb-4">TIPOGRAFÍA SECUNDARIA</p>
+                        <p class="font-inter text-6xl font-bold mb-4">Inter</p>
+                        <p class="text-lab-white/80 mb-6">Texto de cuerpo, descripciones y contenido general</p>
+                        <div class="space-y-2 text-sm">
+                            <p class="font-inter font-bold">Bold 700 - Énfasis fuerte</p>
+                            <p class="font-inter font-semibold">SemiBold 600 - Énfasis medio</p>
+                            <p class="font-inter font-medium">Medium 500 - Destacados</p>
+                            <p class="font-inter">Regular 400 - Texto general</p>
+                            <p class="font-inter font-light">Light 300 - Texto secundario</p>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-hyper-cyan/30">
+                            <p class="font-inter text-lg">El hardware gaming que multiplica tu potencial y transforma tu experiencia de juego en algo extraordinario.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photography Direction -->
+            <div>
+                <h3 class="font-oswald text-4xl font-bold text-hyper-cyan mb-8">Dirección Fotográfica</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-carbon/50 border border-magma/30 rounded-lg p-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-magma/30 to-carbon rounded-lg mb-4 flex items-center justify-center">
+                            <i data-lucide="focus" class="w-16 h-16 text-magma"></i>
+                        </div>
+                        <h4 class="font-bold text-magma mb-2">Estilo Visual</h4>
+                        <p class="text-sm text-lab-white/80">Alto contraste, iluminación dramática con acentos de luz magma y cyan. Fondos oscuros que resaltan el producto.</p>
+                    </div>
+                    <div class="bg-carbon/50 border border-hyper-cyan/30 rounded-lg p-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-hyper-cyan/30 to-carbon rounded-lg mb-4 flex items-center justify-center">
+                            <i data-lucide="aperture" class="w-16 h-16 text-hyper-cyan"></i>
+                        </div>
+                        <h4 class="font-bold text-hyper-cyan mb-2">Composición</h4>
+                        <p class="text-sm text-lab-white/80">Ángulos dinámicos, primeros planos de componentes, énfasis en detalles técnicos y acabados premium.</p>
+                    </div>
+                    <div class="bg-carbon/50 border border-lab-white/30 rounded-lg p-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-lab-white/30 to-carbon rounded-lg mb-4 flex items-center justify-center">
+                            <i data-lucide="palette" class="w-16 h-16 text-lab-white"></i>
+                        </div>
+                        <h4 class="font-bold text-lab-white mb-2">Ambiente</h4>
+                        <p class="text-sm text-lab-white/80">Contextos gaming auténticos, setups reales, gamers en acción. Energía y emoción palpables.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Lab -->
+    <section id="ai-lab" class="min-h-screen py-20 bg-gradient-to-b from-carbon to-carbon/95 page-break">
+        <div class="container mx-auto px-6">
+            <h2 class="font-oswald text-6xl font-bold text-magma mb-4">AI Lab</h2>
+            <p class="text-xl text-hyper-cyan mb-12">Consultor Técnico Inteligente - Powered by Google Gemini</p>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-carbon/50 border border-magma/30 rounded-lg p-8">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 bg-magma rounded-lg flex items-center justify-center">
+                            <i data-lucide="brain" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-oswald text-2xl font-bold">Asistente AI</h3>
+                            <p class="text-sm text-lab-white/70">Consultas técnicas en tiempo real</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <p class="text-lab-white/80">Nuestro asistente AI está equipado con:</p>
+                        <ul class="space-y-2 text-sm text-lab-white/70">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-hyper-cyan flex-shrink-0 mt-1"></i>
+                                <span>Conocimiento completo de especificaciones MULEX HERO</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-hyper-cyan flex-shrink-0 mt-1"></i>
+                                <span>Recomendaciones personalizadas según tu setup</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-hyper-cyan flex-shrink-0 mt-1"></i>
+                                <span>Resolución de problemas técnicos</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-hyper-cyan flex-shrink-0 mt-1"></i>
+                                <span>Comparativas con otros componentes</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-hyper-cyan/10 to-magma/10 border border-hyper-cyan/30 rounded-lg p-8">
+                    <h3 class="font-oswald text-2xl font-bold text-hyper-cyan mb-6">Prueba el Asistente</h3>
+                    <div class="bg-carbon rounded-lg p-4 mb-4 h-64 overflow-y-auto" id="chatContainer">
+                        <div class="flex gap-3 mb-4">
+                            <div class="w-8 h-8 bg-hyper-cyan rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="bot" class="w-4 h-4 text-carbon"></i>
+                            </div>
+                            <div class="bg-hyper-cyan/20 rounded-lg px-4 py-2 flex-1">
+                                <p class="text-sm">¡Hola! Soy el asistente AI de MULEX HERO. ¿En qué puedo ayudarte hoy?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <input 
+                            type="text" 
+                            id="userInput"
+                            placeholder="Escribe tu pregunta sobre MULEX HERO..."
+                            class="flex-1 bg-carbon border border-hyper-cyan/30 rounded-lg px-4 py-2 text-lab-white focus:outline-none focus:border-hyper-cyan"
+                        />
+                        <button 
+                            onclick="sendMessage()"
+                            class="bg-hyper-cyan text-carbon px-6 py-2 rounded-lg font-bold hover:bg-hyper-cyan/80 transition flex items-center gap-2"
+                        >
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            Enviar
+                        </button>
+                    </div>
+                    <p class="text-xs text-lab-white/50 mt-4">
+                        <i data-lucide="info" class="w-3 h-3 inline"></i>
+                        Este es un demo. En producción se conectaría a la API de Google Gemini.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-carbon/50 border border-magma/30 rounded-lg p-8">
+                <h3 class="font-oswald text-2xl font-bold text-magma mb-6">Integración Técnica</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <i data-lucide="code" class="w-6 h-6 text-hyper-cyan"></i>
+                            <h4 class="font-bold">Google Gemini API</h4>
+                        </div>
+                        <p class="text-sm text-lab-white/70">Modelo de lenguaje avanzado para conversaciones naturales y respuestas técnicas precisas.</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <i data-lucide="database" class="w-6 h-6 text-hyper-cyan"></i>
+                            <h4 class="font-bold">Knowledge Base</h4>
+                        </div>
+                        <p class="text-sm text-lab-white/70">Base de datos actualizada con todas las especificaciones, benchmarks y guías de productos.</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <i data-lucide="zap" class="w-6 h-6 text-hyper-cyan"></i>
+                            <h4 class="font-bold">Respuesta Rápida</h4>
+                        </div>
+                        <p class="text-sm text-lab-white/70">Procesamiento en tiempo real para asistencia inmediata a usuarios.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                MULEX HERO
+    <footer class="bg-carbon border-t border-magma/30 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="font-oswald text-2xl font-bold mb-4">
+                        <span class="text-magma">MULEX</span> <span class="text-hyper-cyan">HERO</span>
+                    </div>
+                    <p class="text-sm text-lab-white/70">Juguemos a Lo Bestia</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Productos</h4>
+                    <ul class="space-y-2 text-sm text-lab-white/70">
+                        <li><a href="#" class="hover:text-magma transition">Procesadores</a></li>
+                        <li><a href="#" class="hover:text-magma transition">Tarjetas Gráficas</a></li>
+                        <li><a href="#" class="hover:text-magma transition">Memorias</a></li>
+                        <li><a href="#" class="hover:text-magma transition">Almacenamiento</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Soporte</h4>
+                    <ul class="space-y-2 text-sm text-lab-white/70">
+                        <li><a href="#" class="hover:text-magma transition">Documentación</a></li>
+                        <li><a href="#" class="hover:text-magma transition">Drivers</a></li>
+                        <li><a href="#" class="hover:text-magma transition">Garantía</a></li>
+                        <li><a href="#" class="hover:text-magma transition">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Síguenos</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-magma/20 border border-magma rounded-lg flex items-center justify-center hover:bg-magma transition">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-hyper-cyan/20 border border-hyper-cyan rounded-lg flex items-center justify-center hover:bg-hyper-cyan hover:text-carbon transition">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-lab-white/20 border border-lab-white rounded-lg flex items-center justify-center hover:bg-lab-white hover:text-carbon transition">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="footer-links">
-                <a href="#hero">Inicio</a>
-                <a href="#estrategia">Estrategia</a>
-                <a href="#campanas">Campañas</a>
-                <a href="#logo">Logo</a>
-                <a href="#colores">Colores</a>
-                <a href="#ai-lab">AI Lab</a>
+            <div class="border-t border-magma/30 pt-8 text-center text-sm text-lab-white/50">
+                <p>&copy; 2026 MULEX HERO. Todos los derechos reservados. | Brand Book v1.0</p>
             </div>
-            <p style="opacity: 0.7;">© 2026 MULEX HERO. Todos los derechos reservados.</p>
-            <p style="opacity: 0.7; margin-top: 0.5rem;">Brand Book v1.0 | Creado con innovación y pasión</p>
         </div>
     </footer>
 
     <script>
-        // AI Consultant Functionality
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // AI Chat simulation
         function sendMessage() {
-            const input = document.getElementById('aiInput');
-            const chat = document.getElementById('aiChat');
+            const input = document.getElementById('userInput');
             const message = input.value.trim();
             
             if (message === '') return;
             
-            // Add user message
-            const userMessage = document.createElement('div');
-            userMessage.className = 'ai-message user';
-            userMessage.innerHTML = `<strong>Tú:</strong><br>${message}`;
-            chat.appendChild(userMessage);
+            const chatContainer = document.getElementById('chatContainer');
             
-            // Clear input
-            input.value = '';
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'flex gap-3 mb-4 justify-end';
+            userMsg.innerHTML = `
+                <div class="bg-magma/20 rounded-lg px-4 py-2 max-w-xs">
+                    <p class="text-sm">${message}</p>
+                </div>
+                <div class="w-8 h-8 bg-magma rounded-full flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="user" class="w-4 h-4"></i>
+                </div>
+            `;
+            chatContainer.appendChild(userMsg);
             
             // Simulate AI response
             setTimeout(() => {
-                const aiResponse = document.createElement('div');
-                aiResponse.className = 'ai-message assistant';
-                aiResponse.innerHTML = `<strong>Gemini AI:</strong><br>${getAIResponse(message)}`;
-                chat.appendChild(aiResponse);
-                chat.scrollTop = chat.scrollHeight;
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'flex gap-3 mb-4';
+                aiMsg.innerHTML = `
+                    <div class="w-8 h-8 bg-hyper-cyan rounded-full flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="bot" class="w-4 h-4 text-carbon"></i>
+                    </div>
+                    <div class="bg-hyper-cyan/20 rounded-lg px-4 py-2 flex-1">
+                        <p class="text-sm">Gracias por tu pregunta sobre MULEX HERO. En un entorno de producción, esta respuesta sería generada por Google Gemini con información técnica detallada sobre nuestros productos.</p>
+                    </div>
+                `;
+                chatContainer.appendChild(aiMsg);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                lucide.createIcons();
             }, 1000);
             
-            chat.scrollTop = chat.scrollHeight;
+            input.value = '';
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            lucide.createIcons();
         }
-        
-        function getAIResponse(message) {
-            const lowerMessage = message.toLowerCase();
-            
-            // Color queries
-            if (lowerMessage.includes('color') || lowerMessage.includes('paleta')) {
-                return `La paleta de colores de MULEX HERO incluye:<br>
-                • Naranja Vibrante (#FF6B35) - Color primario para destacar elementos clave<br>
-                • Azul Profundo (#004E89) - Color secundario para profesionalismo<br>
-                • Amarillo Dorado (#F7B801) - Acento para llamados a la acción<br>
-                • Negro Azulado (#1A1A2E) - Para textos y fondos oscuros<br>
-                Usa el naranja y amarillo en gradientes para elementos destacados.`;
-            }
-            
-            // Logo queries
-            if (lowerMessage.includes('logo')) {
-                return `El logo de MULEX HERO tiene varias versiones:<br>
-                • Logo principal vertical con gradiente naranja-amarillo<br>
-                • Logo horizontal para espacios anchos<br>
-                • Monograma "MH" para aplicaciones pequeñas<br>
-                • Versión invertida para fondos oscuros<br>
-                Siempre mantén espacio de respiro equivalente a la altura de la "M" alrededor del logo.`;
-            }
-            
-            // Typography queries
-            if (lowerMessage.includes('tipografía') || lowerMessage.includes('fuente') || lowerMessage.includes('texto')) {
-                return `El sistema tipográfico usa Segoe UI:<br>
-                • Títulos: Bold, 3rem (48px)<br>
-                • Subtítulos: Bold, 2.5rem (40px)<br>
-                • Cuerpo: Regular, 1.1rem con interlineado 1.8<br>
-                Mantén jerarquía clara y usa el color secundario para títulos importantes.`;
-            }
-            
-            // Campaign queries
-            if (lowerMessage.includes('campaña') || lowerMessage.includes('publicidad')) {
-                return `Para campañas de MULEX HERO:<br>
-                • Enfócate en el concepto "Héroes Cotidianos"<br>
-                • Usa fotografía lifestyle auténtica y emocional<br>
-                • Combina gradientes de marca en elementos digitales<br>
-                • Mantén mensajes aspiracionales pero alcanzables<br>
-                • Integra el producto de forma natural en contextos reales`;
-            }
-            
-            // Photography queries
-            if (lowerMessage.includes('foto') || lowerMessage.includes('imagen')) {
-                return `Directrices fotográficas de MULEX HERO:<br>
-                • Iluminación natural y cálida<br>
-                • Composiciones dinámicas con líneas diagonales<br>
-                • Colores coherentes con la paleta de marca<br>
-                • Momentos auténticos y emocionales<br>
-                • Integración sutil del producto en contextos urbanos y lifestyle`;
-            }
-            
-            // Default response
-            return `Excelente pregunta. Para MULEX HERO, siempre considera:<br>
-            • Mantener la coherencia visual con nuestra paleta de colores<br>
-            • Usar el logo correctamente según el contexto<br>
-            • Aplicar la tipografía Segoe UI con jerarquía clara<br>
-            • Transmitir innovación, calidad y aspiración<br>
-            ¿Tienes alguna pregunta más específica sobre colores, logo, tipografía o campañas?`;
-        }
-        
+
         // Allow Enter key to send message
-        document.getElementById('aiInput').addEventListener('keypress', function(e) {
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 sendMessage();
             }
         });
-        
-        // Smooth scrolling for navigation links
+
+        // Smooth scroll for navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1215,24 +822,6 @@
                     });
                 }
             });
-        });
-        
-        // Add animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-        
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.8s ease-out';
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
         });
     </script>
 </body>
