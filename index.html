@@ -807,14 +807,55 @@
     }
   };
 
-  const mulexResponses = [
-    "Resultado de la simulación: El polímero Hevea Java mantiene su integridad estructural bajo presión extrema. Se observa una deformación elástica controlada sin rotura de enlaces moleculares.",
-    "Análisis completado. La membrana redistribuye la carga de forma homogénea, evitando puntos de fallo críticos incluso en condiciones de estrés dinámico.",
-    "Prueba concluida. El material supera el umbral de resistencia previsto. La sensibilidad superficial permanece inalterada tras el impacto.",
-    "Simulación validada. El compuesto demuestra una relación resistencia/grosor incompatible con materiales convencionales.",
-    "Resultado inesperado: El material absorbe la energía cinética y la libera progresivamente, evitando colapso estructural.",
-    "Ensayo finalizado. No se detectan microfracturas. El comportamiento elástico sigue dentro de parámetros de laboratorio."
-  ];
+ const mulexKnowledgeBase = [
+  {
+    keywords: ["nitrógeno", "nitrogeno", "criogen", "criogenia", "frío", "frio", "-196"],
+    responses: [
+      "Ensayo criogénico completado. A −196 °C, el polímero Hevea Java entra en una fase de rigidez controlada. No se observan fracturas ni pérdida de elasticidad tras el retorno a temperatura ambiente.",
+      "Resultado criogénico: el material mantiene la integridad de su red molecular incluso bajo inmersión prolongada en nitrógeno líquido. La recuperación elástica es inmediata.",
+      "Prueba extrema validada. El enfriamiento criogénico no altera la sensibilidad superficial ni compromete la resistencia estructural."
+    ]
+  },
+  {
+    keywords: ["presión", "presion", "toneladas", "bar", "atm"],
+    responses: [
+      "Análisis de presión completado. La membrana redistribuye cargas superiores a 40 toneladas sin generar puntos críticos de fallo.",
+      "Resultado bajo presión extrema: el material soporta valores superiores a 500 bar manteniendo estabilidad dimensional.",
+      "Ensayo mecánico validado. La presión aplicada se disipa de forma homogénea en la estructura del polímero."
+    ]
+  },
+  {
+    keywords: ["impacto", "golpe", "caída", "caida", "choque"],
+    responses: [
+      "Ensayo de impacto finalizado. El material absorbe la energía cinética y la libera de forma progresiva, evitando rotura o rebote destructivo.",
+      "Resultado de choque: deformación máxima controlada seguida de recuperación total de la forma original.",
+      "Prueba de caída validada. No se detectan microfracturas tras impactos repetidos."
+    ]
+  },
+  {
+    keywords: ["fuego", "calor", "temperatura", "llama"],
+    responses: [
+      "Ensayo térmico completado. A altas temperaturas, el polímero mantiene cohesión estructural durante más tiempo que materiales convencionales.",
+      "Resultado térmico: el calor extremo no provoca combustión inmediata ni pérdida abrupta de resistencia.",
+      "Prueba de estrés térmico validada. El material conserva elasticidad funcional dentro del rango operativo."
+    ]
+  },
+  {
+    keywords: ["corte", "cortar", "tijeras", "cuchillo"],
+    responses: [
+      "Ensayo de corte realizado. La estructura molecular dispersa la fuerza aplicada, dificultando la penetración del filo.",
+      "Resultado mecánico: resistencia al corte superior a la prevista para su espesor.",
+      "Prueba de abrasión validada. El material muestra alta tolerancia a herramientas manuales."
+    ]
+  }
+];
+
+// Respuestas por defecto (si no hay coincidencias)
+const mulexFallbackResponses = [
+  "Simulación completada. El material mantiene estabilidad estructural bajo las condiciones descritas.",
+  "Resultado validado. No se detectan anomalías fuera de los parámetros de laboratorio.",
+  "Ensayo finalizado. El comportamiento del polímero se mantiene dentro de valores esperados."
+];
 
   function askExpert() {
   const inputEl = document.getElementById("tech-input");
@@ -832,7 +873,19 @@
   // Aseguramos que SIEMPRE vuelve a habilitar el botón, incluso si algo falla
   setTimeout(() => {
     try {
-      const response = mulexResponses[Math.floor(Math.random() * mulexResponses.length)];
+      function getMulexResponse(input) {
+  const text = input.toLowerCase();
+
+  for (const item of mulexKnowledgeBase) {
+    if (item.keywords.some(keyword => text.includes(keyword))) {
+      return item.responses[Math.floor(Math.random() * item.responses.length)];
+    }
+  }
+
+  return mulexFallbackResponses[
+    Math.floor(Math.random() * mulexFallbackResponses.length)
+  ];
+}
 
       // Escapar input para evitar que se rompa el HTML
       const safeInput = input
