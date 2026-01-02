@@ -794,6 +794,74 @@
     </footer>
 
     <script>
+        import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
+
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  try {
+    const { question } = req.body;
+
+    if (!question || question.length > 300) {
+      return res.status(400).json({ error: "Invalid input" });
+    }
+
+    const response = await openai.responses.create({
+      model: "gpt-4.1-mini",
+      input: [
+        {
+          role: "system",
+          content: `
+Eres el Ingeniero Jefe de Materiales del proyecto MULEX HERO.
+
+Contexto:
+- Producto ficticio.
+- Material: Látex experimental "Hevea Java".
+- Propiedades declaradas:
+  • 200 % más resistente que el acero.
+  • 40 % más fino que el aire.
+
+Tono:
+- Científico
+- Preciso
+- Seco
+- Ligera ironía técnica
+- Lenguaje de laboratorio
+
+Restricciones absolutas:
+- No menciones sexo.
+- No menciones anticoncepción.
+- No hagas bromas explícitas.
+- Nunca rompas el tono técnico.
+
+Objetivo:
+Explicar fenómenos físicos extremos como si fueran pruebas reales de laboratorio.
+`
+        },
+        {
+          role: "user",
+          content: question
+        }
+      ]
+    });
+
+    res.status(200).json({
+      answer: response.output_text
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      answer: "Error de simulación. Reinicie el protocolo."
+    });
+  }
+}
+
       async function askExpert() {
   const input = document.getElementById("tech-input").value.trim();
   if (!input) return;
