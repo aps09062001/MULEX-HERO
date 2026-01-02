@@ -792,97 +792,258 @@
         <p class="text-neutral-500 text-sm">© 2026 Alicia Pérez Sánchez. <a href="https://www.alisonartist.net" target="_blank" class="hover:text-orange-500 transition underline decoration-orange-500/50">www.alisonartist.net</a></p>
     </footer>
 
-    <script>
+<script>
   // Icone
   lucide.createIcons();
 
-  // Fallback semplice se marked non è disponibile
-  const safeMarkdown = (txt) => {
-    try {
-      return (window.marked && typeof window.marked.parse === "function")
-        ? window.marked.parse(txt)
-        : txt.replaceAll("\n", "<br>");
-    } catch {
-      return txt.replaceAll("\n", "<br>");
-    }
-  };
+  // ===== UTILITÀ: parsing numeri e unità =====
+  function parseNumberFromText(text) {
+    // prende il primo numero decente (supporta virgola o punto)
+    const m = (text || "").match(/(-?\d+(?:[.,]\d+)?)/);
+    if (!m) return null;
+    return Number(m[1].replace(",", "."));
+  }
 
-  const mulexResponses = [
-    "Risultato della simulazione: il polimero Hevea Java mantiene la propria integrità strutturale sotto pressione estrema. Si osserva una deformazione elastica controllata senza rottura dei legami molecolari.",
-    
-    "Analisi completata. La membrana ridistribuisce il carico in modo omogeneo, evitando punti critici di cedimento anche in condizioni di stress dinamico.",
-    
-    "Test concluso. Il materiale supera la soglia di resistenza prevista. La sensibilità superficiale rimane inalterata dopo l’impatto.",
-    
-    "Simulazione validata. Il composto dimostra un rapporto resistenza/spessore incompatibile con materiali convenzionali.",
-    
-    "Risultato inatteso: il materiale assorbe l’energia cinetica e la rilascia progressivamente, prevenendo il collasso strutturale.",
-    
-    "Prova terminata. Nessuna microfrattura rilevata. Il comportamento elastico rientra nei parametri di laboratorio."
+  function detectUnits(text) {
+    const t = (text || "").toLowerCase();
+
+    return {
+      celsius: /(-?\d+(?:[.,]\d+)?)\s*°\s*c|(-?\d+(?:[.,]\d+)?)\s*c\b/.test(t),
+      bar: /(-?\d+(?:[.,]\d+)?)\s*bar\b/.test(t),
+      atm: /(-?\d+(?:[.,]\d+)?)\s*atm\b/.test(t),
+      pascal: /(-?\d+(?:[.,]\d+)?)\s*(pa|kpa|mpa)\b/.test(t),
+      newton: /(-?\d+(?:[.,]\d+)?)\s*n\b/.test(t),
+      kg: /(-?\d+(?:[.,]\d+)?)\s*kg\b/.test(t),
+      ton: /(-?\d+(?:[.,]\d+)?)\s*(t|ton|tonnellate)\b/.test(t),
+      ms: /(-?\d+(?:[.,]\d+)?)\s*m\/s\b/.test(t),
+      kmh: /(-?\d+(?:[.,]\d+)?)\s*km\/h\b/.test(t),
+      seconds: /(-?\d+(?:[.,]\d+)?)\s*s\b|secondi|sec\b/.test(t),
+      meters: /(-?\d+(?:[.,]\d+)?)\s*m\b|metri\b/.test(t)
+    };
+  }
+
+  function clamp(n, min, max) {
+    return Math.max(min, Math.min(max, n));
+  }
+
+  function rnd(min, max) {
+    return Math.round((min + Math.random() * (max - min)) * 100) / 100;
+  }
+
+  function pick(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function buildLabMetrics(input) {
+    const t = (input || "").toLowerCase();
+    const units = detectUnits(t);
+    const n = parseNumberFromText(t);
+
+    // Metriche "fittizie" coerenti con il concept (tecnico-assurdo)
+    // Se l'utente fornisce un numero, lo usiamo come intensità e generiamo valori correlati.
+    const intensity = n !== null ? Math.abs(n) : rnd(8, 42);
+
+    // valori base
+    const tractionN = Math.round(clamp(intensity * rnd(80, 160), 500, 12000));
+    const strainPct = Math.round(clamp(rnd(220, 560) - intensity * rnd(0.2, 1.1), 180, 620));
+    const microfract = Math.round(clamp(rnd(0, 3) + intensity * rnd(0.01, 0.08), 0, 9));
+
+    // “stabilità” e “sensibilità” come scale
+    const stability = Math.round(clamp(92 - intensity * rnd(0.05, 0.35), 70, 99));
+    const tactility = Math.round(clamp(96 - intensity * rnd(0.02, 0.18), 78, 99));
+
+    // Temperature hint
+    let tempLine = "";
+    if (t.includes("azoto") || t.includes("nitrogeno") || t.includes("criogen") || units.celsius && n !== null && n <= -50) {
+      const temp = units.celsius && n !== null ? -Math.abs(n) : -196;
+      tempLine = `• Temperatura di prova: <strong>${temp} °C</strong> (protocollo criogenico)\n`;
+    } else if (t.includes("fuoco") || t.includes("fiamma") || t.includes("calore") || (units.celsius && n !== null && n >= 60)) {
+      const temp = units.celsius && n !== null ? Math.abs(n) : Math.round(rnd(120, 260));
+      tempLine = `• Temperatura di prova: <strong>${temp} °C</strong> (stress termico)\n`;
+    }
+
+    // Pressure hint
+    let pressLine = "";
+    if (t.includes("pressione") || units.bar || units.atm || units.pascal) {
+      let p = units.bar && n !== null ? Math.abs(n) : Math.round(rnd(12, 180));
+      pressLine = `• Pressione equivalente: <strong>${p} bar</strong> (carico idrostatico)\n`;
+    }
+
+    // Impact / speed hint
+    let impactLine = "";
+    if (t.includes("impatto") || t.includes("urto") || t.includes("caduta") || units.kmh || units.ms) {
+      let v = units.kmh && n !== null ? Math.abs(n) : Math.round(rnd(25, 90));
+      impactLine = `• Velocità d’impatto stimata: <strong>${v} km/h</strong> (energia cinetica dissipata)\n`;
+    }
+
+    // tonnellate / carico
+    let loadLine = "";
+    if (units.ton || t.includes("tonnellate") || t.includes("carico") || t.includes("compressione")) {
+      let tons = units.ton && n !== null ? Math.abs(n) : rnd(2, 18);
+      tons = clamp(tons, 1, 60);
+      loadLine = `• Carico statico equivalente: <strong>${tons} t</strong> (ridistribuzione uniforme)\n`;
+    }
+
+    // Output metrics
+    const metrics = [
+      tempLine,
+      pressLine,
+      impactLine,
+      loadLine,
+      `• Resistenza a trazione stimata: <strong>${tractionN} N</strong>\n`,
+      `• Deformazione massima controllata: <strong>${strainPct}%</strong>\n`,
+      `• Microfratture rilevate: <strong>${microfract}</strong> (target: 0)\n`,
+      `• Stabilità strutturale: <strong>${stability}/100</strong>\n`,
+      `• Sensibilità superficiale: <strong>${tactility}/100</strong>\n`
+    ].filter(Boolean).join("");
+
+    return metrics.trim();
+  }
+
+  // ===== BASE DI CONOSCENZA (IT) =====
+  const mulexKnowledgeBase = [
+    {
+      keywords: ["azoto", "nitrogeno", "criogen", "criogenia", "freddo", "-196", "°c", "c"],
+      responses: [
+        "Test criogenico completato. Il polimero Hevea Java entra in una fase di irrigidimento controllato senza collasso della rete molecolare. Recupero elastico immediato al ritorno in range operativo.",
+        "Risultato criogenico validato: nessuna propagazione di frattura e nessuna perdita di coesione interna. La membrana mantiene stabilità e risposta al tatto entro parametri di laboratorio.",
+        "Protocollo criogenico: la matrice polimerica conserva integrità e mantiene una deformazione reversibile. Sensibilità superficiale: invariata."
+      ]
+    },
+    {
+      keywords: ["pressione", "bar", "atm", "kpa", "mpa", "compressione", "carico", "ton", "tonnellate", "t"],
+      responses: [
+        "Analisi di pressione completata. La membrana redistribuisce il carico in modo omogeneo, eliminando punti critici di cedimento anche sotto stress prolungato.",
+        "Risultato sotto pressione estrema: stabilità dimensionale mantenuta e dissipazione uniforme della forza lungo la matrice del composto.",
+        "Test meccanico validato. La pressione applicata viene gestita tramite “mappa di tensione” interna: deformazione controllata, nessuna rottura."
+      ]
+    },
+    {
+      keywords: ["impatto", "urto", "caduta", "colpo", "schianto", "botta", "km/h", "m/s"],
+      responses: [
+        "Test d’impatto concluso. Il materiale assorbe energia cinetica e la rilascia progressivamente, evitando rotture e rimbalzi distruttivi.",
+        "Risultato d’urto: deformazione massima controllata seguita da recupero completo. Nessuna microfrattura strutturale rilevata.",
+        "Prova di caduta validata. Integrità mantenuta dopo impatti ripetuti: comportamento elastico stabile."
+      ]
+    },
+    {
+      keywords: ["calore", "fuoco", "fiamma", "temperatura", "forno"],
+      responses: [
+        "Test termico completato. Il polimero mantiene coesione strutturale più a lungo rispetto a materiali convenzionali di pari spessore. Degrado progressivo, non catastrofico.",
+        "Risultato termico: esposizione a calore intenso senza collasso immediato. Elasticità funzionale preservata entro il range operativo.",
+        "Stress termico validato. Il materiale conserva stabilità e risposta elastica prima della transizione termica del composto."
+      ]
+    },
+    {
+      keywords: ["taglio", "tagliare", "forbici", "coltello", "lama", "incidere"],
+      responses: [
+        "Test di taglio eseguito. La struttura disperde la forza applicata e riduce la penetrazione del filo: resistenza anomala rispetto allo spessore.",
+        "Risultato meccanico: abrasione superficiale minima e assenza di propagazione della frattura. Integrità mantenuta.",
+        "Prova di incisione validata. Il materiale tollera utensili manuali con degradazione localizzata e recupero elastico stabile."
+      ]
+    },
+    {
+      keywords: ["allungare", "allungamento", "trazione", "tirare", "tensione", "elasticità", "elastico", "stretch"],
+      responses: [
+        "Test di trazione completato. Comportamento iperelastico con recupero quasi totale. Nessuna rottura per concentrazione di carico.",
+        "Risultato in tensione: stabilità in cicli ripetuti di stiramento. La curva sforzo-deformazione rimane coerente.",
+        "Prova di elasticità validata. Rete polimerica resistente a fatica, deformazione reversibile e controllo delle tensioni interne."
+      ]
+    },
+    {
+      keywords: ["acqua", "idraulica", "tubo", "tubo da giardino", "manguera", "riempire", "pressione idraulica"],
+      responses: [
+        "Simulazione idraulica completata. Il materiale gestisce variazioni di flusso e pressioni dinamiche senza delaminazione né cedimenti puntuali.",
+        "Risultato idraulico: espansione controllata, parete stabile, nessuna perdita di integrità anche in riempimento rapido.",
+        "Test con carico idrico validato. Energia del fluido assorbita e ridistribuita: nessun collasso strutturale."
+      ]
+    }
   ];
 
-  function askExpert() {
-  const inputEl = document.getElementById("tech-input");
-  const btn = document.getElementById("tech-btn");
-  const outputDiv = document.getElementById("tech-output");
-  const contentDiv = document.getElementById("tech-content");
+  const mulexFallbackResponses = [
+    "Simulazione completata. Il materiale mantiene stabilità strutturale nelle condizioni descritte.",
+    "Risultato validato. Nessuna anomalia rilevata oltre i parametri di laboratorio.",
+    "Test concluso. Il comportamento del polimero rientra nei valori operativi previsti."
+  ];
 
-  const input = (inputEl?.value || "").trim();
-  if (!input) return;
-
-  btn.disabled = true;
-  btn.innerHTML = '<div class="spinner inline-block mr-2"></div> ELABORAZIONE IN CORSO...';
-  outputDiv.classList.add("hidden");
-
-  setTimeout(() => {
-    try {
-      const response =
-        mulexResponses[Math.floor(Math.random() * mulexResponses.length)];
-
-      const safeInput = input
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;");
-
-      contentDiv.innerHTML = `
-        <div class="space-y-4">
-          <div>
-            <span class="block text-xs text-neutral-400 font-mono uppercase tracking-widest">
-              Input registrato
-            </span>
-            <p class="text-white">${safeInput}</p>
-          </div>
-
-          <div class="border-l-2 border-orange-500 pl-4">
-            <p class="text-neutral-200 leading-relaxed">
-              ${response}
-            </p>
-          </div>
-
-          <div class="text-xs text-neutral-500 font-mono pt-2 border-t border-white/10">
-            Protocollo MULEX AI LAB v1.0 — Simulazione completata.
-          </div>
-        </div>
-      `;
-
-      outputDiv.classList.remove("hidden");
-
-    } catch (e) {
-      contentDiv.innerHTML = `
-        <div class="text-sm text-neutral-300">
-          Errore interno del modulo. Riavviare il protocollo.
-        </div>
-      `;
-      outputDiv.classList.remove("hidden");
-      console.error(e);
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = "AVVIA SIMULAZIONE";
+  function getMulexResponse(input) {
+    const text = (input || "").toLowerCase();
+    for (const item of mulexKnowledgeBase) {
+      if (item.keywords.some((k) => text.includes(k))) {
+        return pick(item.responses);
+      }
     }
-  }, 900);
-}
+    return pick(mulexFallbackResponses);
+  }
 
+  // ===== UI: simulatore =====
+  function askExpert() {
+    const inputEl = document.getElementById("tech-input");
+    const btn = document.getElementById("tech-btn");
+    const outputDiv = document.getElementById("tech-output");
+    const contentDiv = document.getElementById("tech-content");
+
+    const input = (inputEl?.value || "").trim();
+    if (!input) return;
+
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner inline-block mr-2"></div> ELABORAZIONE IN CORSO...';
+    outputDiv.classList.add("hidden");
+
+    setTimeout(() => {
+      try {
+        const response = getMulexResponse(input);
+        const metrics = buildLabMetrics(input);
+
+        const safeInput = input
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
+
+        contentDiv.innerHTML = `
+          <div class="space-y-4">
+            <div>
+              <span class="block text-xs text-neutral-400 font-mono uppercase tracking-widest">
+                Input registrato
+              </span>
+              <p class="text-white">${safeInput}</p>
+            </div>
+
+            <div class="border-l-2 border-orange-500 pl-4">
+              <p class="text-neutral-200 leading-relaxed">${response}</p>
+            </div>
+
+            <div class="glass-panel p-4 rounded-lg border border-white/10">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                <span class="text-xs font-mono text-cyan-300">LAB METRICS_</span>
+              </div>
+              <pre class="whitespace-pre-wrap text-xs text-neutral-300 font-mono leading-relaxed">${metrics}</pre>
+            </div>
+
+            <div class="text-xs text-neutral-500 font-mono pt-2 border-t border-white/10">
+              Protocollo MULEX AI LAB v1.1 — Simulazione completata.
+            </div>
+          </div>
+        `;
+
+        outputDiv.classList.remove("hidden");
+      } catch (e) {
+        contentDiv.innerHTML = `
+          <div class="text-sm text-neutral-300">
+            Errore interno del modulo. Riavviare il protocollo.
+          </div>
+        `;
+        outputDiv.classList.remove("hidden");
+        console.error(e);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = "AVVIA SIMULAZIONE";
+      }
+    }, 900);
+  }
 </script>
+
 
 
 </body>
