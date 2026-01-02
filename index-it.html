@@ -822,37 +822,66 @@
   ];
 
   function askExpert() {
-    const inputEl = document.getElementById("tech-input");
-    const btn = document.getElementById("tech-btn");
-    const outputDiv = document.getElementById("tech-output");
-    const contentDiv = document.getElementById("tech-content");
+  const inputEl = document.getElementById("tech-input");
+  const btn = document.getElementById("tech-btn");
+  const outputDiv = document.getElementById("tech-output");
+  const contentDiv = document.getElementById("tech-content");
 
-    const input = (inputEl?.value || "").trim();
-    if (!input) return;
+  const input = (inputEl?.value || "").trim();
+  if (!input) return;
 
-    btn.disabled = true;
-    btn.innerHTML = '<div class="spinner inline-block mr-2"></div> ELABORAZIONE IN CORSO...';
-    outputDiv.classList.add("hidden");
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner inline-block mr-2"></div> ELABORAZIONE IN CORSO...';
+  outputDiv.classList.add("hidden");
 
-    setTimeout(() => {
+  setTimeout(() => {
+    try {
       const response =
         mulexResponses[Math.floor(Math.random() * mulexResponses.length)];
 
-      const html = `
-        <p><strong>Input registrato:</strong> ${input.replaceAll("<","&lt;").replaceAll(">","&gt;")}</p>
-        <p class="mt-4">${response}</p>
-        <p class="mt-4 text-xs text-neutral-500 font-mono">
-          Protocollo MULEX AI LAB v1.0 — Simulazione completata.
-        </p>
+      const safeInput = input
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+
+      contentDiv.innerHTML = `
+        <div class="space-y-4">
+          <div>
+            <span class="block text-xs text-neutral-400 font-mono uppercase tracking-widest">
+              Input registrato
+            </span>
+            <p class="text-white">${safeInput}</p>
+          </div>
+
+          <div class="border-l-2 border-orange-500 pl-4">
+            <p class="text-neutral-200 leading-relaxed">
+              ${response}
+            </p>
+          </div>
+
+          <div class="text-xs text-neutral-500 font-mono pt-2 border-t border-white/10">
+            Protocollo MULEX AI LAB v1.0 — Simulazione completata.
+          </div>
+        </div>
       `;
 
-      contentDiv.innerHTML = safeMarkdown(html);
       outputDiv.classList.remove("hidden");
 
+    } catch (e) {
+      contentDiv.innerHTML = `
+        <div class="text-sm text-neutral-300">
+          Errore interno del modulo. Riavviare il protocollo.
+        </div>
+      `;
+      outputDiv.classList.remove("hidden");
+      console.error(e);
+    } finally {
       btn.disabled = false;
       btn.innerHTML = "AVVIA SIMULAZIONE";
-    }, 900);
-  }
+    }
+  }, 900);
+}
+
 </script>
 
 
