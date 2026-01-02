@@ -830,23 +830,20 @@
     btn.innerHTML = '<div class="spinner inline-block mr-2"></div> PROCESANDO...';
     outputDiv.classList.add("hidden");
 
-    setTimeout(() => {
-      const response = mulexResponses[Math.floor(Math.random() * mulexResponses.length)];
+   const html = `
+  <p><strong>Entrada registrada:</strong> ${input.replaceAll("<","&lt;").replaceAll(">","&gt;")}</p>
+  <p class="mt-4">${response}</p>
+  <p class="mt-4 text-xs text-neutral-500 font-mono">
+    Protocolo MULEX AI LAB v1.0 — Simulación completada.
+  </p>
+`;
 
-      const html = `
-        <p><strong>Entrada registrada:</strong> ${input.replaceAll("<","&lt;").replaceAll(">","&gt;")}</p>
-        <p class="mt-4">${response}</p>
-        <p class="mt-4 text-xs text-neutral-500 font-mono">
-          Protocolo MULEX AI LAB v1.0 — Simulación completada.
-        </p>
-      `;
+contentDiv.innerHTML = safeMarkdown(html);
+outputDiv.classList.remove("hidden");
 
-      contentDiv.innerHTML = safeMarkdown(html);
-      outputDiv.classList.remove("hidden");
+btn.disabled = false;
+btn.innerHTML = "INICIAR SIMULACIÓN";
 
-      btn.disabled = false;
-      btn.innerHTML = "INICIAR SIMULACIÓN";
-    }, 900);
   }
 </script>
 
