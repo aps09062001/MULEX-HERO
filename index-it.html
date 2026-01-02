@@ -794,10 +794,27 @@
     </footer>
 
     <script>
-        lucide.createIcons();
-        const apiKey = ""; 
+  lucide.createIcons();
+        const apiKey = ""; // Lascia vuoto per usare la Modalità Demo
 
         async function callGemini(prompt, systemInstruction) {
+            // Se non c'è API Key, usa la modalità simulazione
+            if (!apiKey) {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(`[SIMULAZIONE DEMO]
+In base all'analisi dei parametri del polimero Mulex Hero:
+
+La struttura molecolare a reticolo incrociato dell'Hevea Java modificato offre una resilienza unica. In questo scenario specifico, il materiale assorbirebbe l'energia cinetica distribuendola lungo tutta la superficie della membrana, prevenendo la rottura catastrofica.
+
+Dati stimati:
+- Integrità strutturale: 99.8%
+- Deformazione elastica: Recuperata in 0.4s
+- Risultato: Nessuna penetrazione rilevata.`);
+                    }, 2000); // Ritardo finto di 2 secondi per realismo
+                });
+            }
+
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
             const payload = { contents: [{ parts: [{ text: prompt }] }], systemInstruction: { parts: [{ text: systemInstruction }] } };
             try {
@@ -805,7 +822,10 @@
                 if (!response.ok) throw new Error(response.status);
                 const data = await response.json();
                 return data.candidates?.[0]?.content?.parts?.[0]?.text || "Error.";
-            } catch (error) { console.error(error); return "Error de conexión."; }
+            } catch (error) { 
+                console.error(error); 
+                return "Errore di connessione API. Controlla la chiave o la connessione internet."; 
+            }
         }
 
         async function askExpert() {
@@ -816,12 +836,17 @@
             const outputDiv = document.getElementById('tech-output');
             
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<div class="spinner inline-block mr-2"></div> PROCESANDO...'; btn.disabled = true; outputDiv.classList.add('hidden');
+            btn.innerHTML = '<div class="spinner inline-block mr-2"></div> ELABORAZIONE...'; btn.disabled = true; outputDiv.classList.add('hidden');
             
             const systemPrompt = `Role: Chief Scientist for Mulex Hero. Material: "Hevea Java" latex (fictional). Properties: 200% stronger than steel, 40% thinner than air. Tone: Scientific, dry, factual. Language: Italian. Task: Explain material reaction to user input.`;
+            
+            // Passiamo l'input alla funzione che decide se usare l'API o la Demo
             const result = await callGemini(input, systemPrompt);
             
-            contentDiv.innerHTML = marked.parse(result); outputDiv.classList.remove('hidden'); btn.innerHTML = originalText; btn.disabled = false;
+            contentDiv.innerHTML = marked.parse(result); 
+            outputDiv.classList.remove('hidden'); 
+            btn.innerHTML = originalText; 
+            btn.disabled = false;
         }
         
         // Enter key support for tech input
