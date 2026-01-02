@@ -817,28 +817,64 @@
   ];
 
   function askExpert() {
-    const inputEl = document.getElementById("tech-input");
-    const btn = document.getElementById("tech-btn");
-    const outputDiv = document.getElementById("tech-output");
-    const contentDiv = document.getElementById("tech-content");
+  const inputEl = document.getElementById("tech-input");
+  const btn = document.getElementById("tech-btn");
+  const outputDiv = document.getElementById("tech-output");
+  const contentDiv = document.getElementById("tech-content");
 
-    const input = (inputEl?.value || "").trim();
-    if (!input) return;
+  const input = (inputEl?.value || "").trim();
+  if (!input) return;
 
-    btn.disabled = true;
-    btn.innerHTML = '<div class="spinner inline-block mr-2"></div> PROCESANDO...';
-    outputDiv.classList.add("hidden");
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner inline-block mr-2"></div> PROCESANDO...';
+  outputDiv.classList.add("hidden");
 
-   setTimeout(() => {
-  const response =
-    mulexResponses[Math.floor(Math.random() * mulexResponses.length)];
+  // Aseguramos que SIEMPRE vuelve a habilitar el botón, incluso si algo falla
+  setTimeout(() => {
+    try {
+      const response = mulexResponses[Math.floor(Math.random() * mulexResponses.length)];
 
-  contentDiv.innerHTML = `...HTML bonito...`;
+      // Escapar input para evitar que se rompa el HTML
+      const safeInput = input
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
 
-  outputDiv.classList.remove("hidden");
-  btn.disabled = false;
-  btn.innerHTML = "INICIAR SIMULACIÓN";
-}, 900);
+      contentDiv.innerHTML = `
+        <div class="space-y-4">
+          <div>
+            <span class="block text-xs text-neutral-400 font-mono uppercase tracking-widest">
+              Entrada registrada
+            </span>
+            <p class="text-white">${safeInput}</p>
+          </div>
+
+          <div class="border-l-2 border-orange-500 pl-4">
+            <p class="text-neutral-200 leading-relaxed">${response}</p>
+          </div>
+
+          <div class="text-xs text-neutral-500 font-mono pt-2 border-t border-white/10">
+            Protocolo MULEX AI LAB v1.0 — Simulación completada.
+          </div>
+        </div>
+      `;
+
+      outputDiv.classList.remove("hidden");
+    } catch (e) {
+      contentDiv.innerHTML = `
+        <div class="text-sm text-neutral-300">
+          Error interno del módulo. Reinicie el protocolo.
+        </div>
+      `;
+      outputDiv.classList.remove("hidden");
+      console.error(e);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = "INICIAR SIMULACIÓN";
+    }
+  }, 900);
+}
+
 
 </script>
 
