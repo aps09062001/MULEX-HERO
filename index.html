@@ -793,43 +793,48 @@
         <p class="text-neutral-500 text-sm">© 2026 Alicia Perez Sanchez.www.alisonartist.net.</p>
     </footer>
 
-    <script>
-        lucide.createIcons();
-        const apiKey = "/api/mulex-ai.js"; 
+ <script>
+  lucide.createIcons();
 
-        async function callGemini(prompt, systemInstruction) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            const payload = { contents: [{ parts: [{ text: prompt }] }], systemInstruction: { parts: [{ text: systemInstruction }] } };
-            try {
-                const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                if (!response.ok) throw new Error(response.status);
-                const data = await response.json();
-                return data.candidates?.[0]?.content?.parts?.[0]?.text || "Error.";
-            } catch (error) { console.error(error); return "Error de conexión."; }
-        }
+  const mulexResponses = [
+    "Resultado de la simulación: El polímero Hevea Java mantiene su integridad estructural bajo presión extrema. Se observa una deformación elástica controlada sin rotura de enlaces moleculares.",
+    "Análisis completado. La membrana redistribuye la carga de forma homogénea, evitando puntos de fallo críticos incluso en condiciones de estrés dinámico.",
+    "Prueba concluida. El material supera el umbral de resistencia previsto. La sensibilidad superficial permanece inalterada tras el impacto.",
+    "Simulación validada. El compuesto demuestra una relación resistencia/grosor incompatible con materiales convencionales.",
+    "Resultado inesperado: El material absorbe la energía cinética y la libera progresivamente, evitando colapso estructural.",
+    "Ensayo finalizado. No se detectan microfracturas. El comportamiento elástico sigue dentro de parámetros de laboratorio."
+  ];
 
-        async function askExpert() {
-            const input = document.getElementById('tech-input').value;
-            if (!input) return;
-            const btn = document.getElementById('tech-btn');
-            const contentDiv = document.getElementById('tech-content');
-            const outputDiv = document.getElementById('tech-output');
-            
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<div class="spinner inline-block mr-2"></div> PROCESANDO...'; btn.disabled = true; outputDiv.classList.add('hidden');
-            
-            const systemPrompt = `Role: Chief Scientist for Mulex Hero. Material: "Hevea Java" latex (fictional). Properties: 200% stronger than steel, 40% thinner than air. Tone: Scientific, dry, factual. Language: Spanish. Task: Explain material reaction to user input.`;
-            const result = await callGemini(input, systemPrompt);
-            
-            contentDiv.innerHTML = marked.parse(result); outputDiv.classList.remove('hidden'); btn.innerHTML = originalText; btn.disabled = false;
-        }
-        
-        // Enter key support for tech input
-        document.getElementById('tech-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-              askExpert();
-            }
-        });
-    </script>
+  function askExpert() {
+    const input = document.getElementById("tech-input").value.trim();
+    if (!input) return;
+
+    const btn = document.getElementById("tech-btn");
+    const outputDiv = document.getElementById("tech-output");
+    const contentDiv = document.getElementById("tech-content");
+
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner inline-block mr-2"></div> PROCESANDO...';
+    outputDiv.classList.add("hidden");
+
+    setTimeout(() => {
+      const response =
+        mulexResponses[Math.floor(Math.random() * mulexResponses.length)];
+
+      contentDiv.innerHTML = `
+        <p><strong>Entrada registrada:</strong> ${input}</p>
+        <p class="mt-4">${response}</p>
+        <p class="mt-4 text-xs text-neutral-500 font-mono">
+          Protocolo MULEX AI LAB v1.0 — Simulación completada.
+        </p>
+      `;
+
+      outputDiv.classList.remove("hidden");
+      btn.disabled = false;
+      btn.innerHTML = "INICIAR SIMULACIÓN";
+    }, 1200);
+  }
+</script>
+
 </body>
 </html>
