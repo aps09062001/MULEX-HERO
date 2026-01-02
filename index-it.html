@@ -274,7 +274,7 @@
                 <div class="w-full aspect-[2/1] bg-neutral-800 relative magazine-spread overflow-hidden flex">
                     <!-- BACKGROUND IMAGE -->
                     <div class="absolute inset-0 bg-cover bg-center transition-all duration-500" 
-                         style="background-image: url('https://images.unsplash.com/photo-1542401886-65d6c61db217?q=80&w=2070&auto=format&fit=crop');">
+                         style="background-image:"assets/6DF208BC-5ABE-41C9-BCB1-DAA1FFA60792.PNG">
                          <div class="absolute inset-0 bg-black/30"></div> 
                     </div>
                     
@@ -790,46 +790,72 @@
             <i data-lucide="hexagon" class="text-orange-600 w-6 h-6"></i>
             <span class="text-xl font-bold tracking-widest brand-font text-white">MULEX HERO</span>
         </div>
-        <p class="text-neutral-500 text-sm">© 2024 MULEX HERO Advanced Materials. Manuale del Marchio Riservato.</p>
+        <p class="text-neutral-500 text-sm">© 2026 Alicia Pérez Sánchez. <a href="https://www.alisonartist.net" target="_blank" class="hover:text-orange-500 transition underline decoration-orange-500/50">www.alisonartist.net</a></p>
     </footer>
 
     <script>
-        lucide.createIcons();
-        const apiKey = ""; 
+  // Icone
+  lucide.createIcons();
 
-        async function callGemini(prompt, systemInstruction) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            const payload = { contents: [{ parts: [{ text: prompt }] }], systemInstruction: { parts: [{ text: systemInstruction }] } };
-            try {
-                const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                if (!response.ok) throw new Error(response.status);
-                const data = await response.json();
-                return data.candidates?.[0]?.content?.parts?.[0]?.text || "Error.";
-            } catch (error) { console.error(error); return "Error de conexión."; }
-        }
+  // Fallback semplice se marked non è disponibile
+  const safeMarkdown = (txt) => {
+    try {
+      return (window.marked && typeof window.marked.parse === "function")
+        ? window.marked.parse(txt)
+        : txt.replaceAll("\n", "<br>");
+    } catch {
+      return txt.replaceAll("\n", "<br>");
+    }
+  };
 
-        async function askExpert() {
-            const input = document.getElementById('tech-input').value;
-            if (!input) return;
-            const btn = document.getElementById('tech-btn');
-            const contentDiv = document.getElementById('tech-content');
-            const outputDiv = document.getElementById('tech-output');
-            
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<div class="spinner inline-block mr-2"></div> PROCESANDO...'; btn.disabled = true; outputDiv.classList.add('hidden');
-            
-            const systemPrompt = `Role: Chief Scientist for Mulex Hero. Material: "Hevea Java" latex (fictional). Properties: 200% stronger than steel, 40% thinner than air. Tone: Scientific, dry, factual. Language: Italian. Task: Explain material reaction to user input.`;
-            const result = await callGemini(input, systemPrompt);
-            
-            contentDiv.innerHTML = marked.parse(result); outputDiv.classList.remove('hidden'); btn.innerHTML = originalText; btn.disabled = false;
-        }
-        
-        // Enter key support for tech input
-        document.getElementById('tech-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-              askExpert();
-            }
-        });
-    </script>
+  const mulexResponses = [
+    "Risultato della simulazione: il polimero Hevea Java mantiene la propria integrità strutturale sotto pressione estrema. Si osserva una deformazione elastica controllata senza rottura dei legami molecolari.",
+    
+    "Analisi completata. La membrana ridistribuisce il carico in modo omogeneo, evitando punti critici di cedimento anche in condizioni di stress dinamico.",
+    
+    "Test concluso. Il materiale supera la soglia di resistenza prevista. La sensibilità superficiale rimane inalterata dopo l’impatto.",
+    
+    "Simulazione validata. Il composto dimostra un rapporto resistenza/spessore incompatibile con materiali convenzionali.",
+    
+    "Risultato inatteso: il materiale assorbe l’energia cinetica e la rilascia progressivamente, prevenendo il collasso strutturale.",
+    
+    "Prova terminata. Nessuna microfrattura rilevata. Il comportamento elastico rientra nei parametri di laboratorio."
+  ];
+
+  function askExpert() {
+    const inputEl = document.getElementById("tech-input");
+    const btn = document.getElementById("tech-btn");
+    const outputDiv = document.getElementById("tech-output");
+    const contentDiv = document.getElementById("tech-content");
+
+    const input = (inputEl?.value || "").trim();
+    if (!input) return;
+
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner inline-block mr-2"></div> ELABORAZIONE IN CORSO...';
+    outputDiv.classList.add("hidden");
+
+    setTimeout(() => {
+      const response =
+        mulexResponses[Math.floor(Math.random() * mulexResponses.length)];
+
+      const html = `
+        <p><strong>Input registrato:</strong> ${input.replaceAll("<","&lt;").replaceAll(">","&gt;")}</p>
+        <p class="mt-4">${response}</p>
+        <p class="mt-4 text-xs text-neutral-500 font-mono">
+          Protocollo MULEX AI LAB v1.0 — Simulazione completata.
+        </p>
+      `;
+
+      contentDiv.innerHTML = safeMarkdown(html);
+      outputDiv.classList.remove("hidden");
+
+      btn.disabled = false;
+      btn.innerHTML = "AVVIA SIMULAZIONE";
+    }, 900);
+  }
+</script>
+
+
 </body>
 </html>
